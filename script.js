@@ -4,7 +4,9 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+    initReducedMotion();
     initPageLoader();
+    initReadingTime();
     initLanguageSwitcher();
     initQuickProjectSelect();
     initScrollProgress();
@@ -42,6 +44,36 @@ document.addEventListener('DOMContentLoaded', () => {
     initQuickContact();
     initFooterYear();
 });
+
+/**
+ * Respect prefers-reduced-motion (accessibility)
+ */
+function initReducedMotion() {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+        document.body.classList.add('reduce-motion');
+    }
+}
+
+/**
+ * Dynamic reading time based on main content word count
+ */
+function initReadingTime() {
+    const el = document.getElementById('readingTime');
+    if (!el) return;
+    const main = document.querySelector('main') || document.body;
+    const sections = document.querySelectorAll('.section .container');
+    let text = '';
+    sections.forEach(s => { text += (s.textContent || ''); });
+    const words = text.trim().split(/\s+/).filter(Boolean).length;
+    const mins = Math.max(1, Math.ceil(words / 200));
+    const label = el.querySelector('span') ? el : el;
+    if (el.querySelector('i')) {
+        el.innerHTML = '<i class="fas fa-clock"></i> ~' + mins + ' min read';
+    } else {
+        el.textContent = '~' + mins + ' min read';
+    }
+}
 
 /**
  * Page loader - hide when page is ready
@@ -174,7 +206,7 @@ function initActiveNavLink() {
  */
 function initScrollReveal() {
     const revealElements = document.querySelectorAll(
-        '.section-header, .service-card, .tech-item, .project-card, .about-content, .skill-item, .faq-item, .team-card, .cert-badge, .client-logo, .testimonials-slider, .process-step, .pricing-card, .timeline-item, .map-wrapper, .compare-table-wrap, .as-seen-logos, .industry-tags'
+        '.section-header, .service-card, .tech-item, .project-card, .about-content, .skill-item, .faq-item, .team-card, .cert-badge, .client-logo, .testimonials-slider, .process-step, .pricing-card, .timeline-item, .map-wrapper, .compare-table-wrap, .as-seen-logos, .industry-tags, .blog-card'
     );
 
     const revealOptions = {
@@ -567,11 +599,11 @@ function initCookieConsent() {
 }
 
 /**
- * Particle background in hero
+ * Particle background in hero (disabled when user prefers reduced motion)
  */
 function initParticles() {
     const canvas = document.getElementById('heroParticles');
-    if (!canvas) return;
+    if (!canvas || document.body.classList.contains('reduce-motion')) return;
 
     const ctx = canvas.getContext('2d');
     let particles = [];
