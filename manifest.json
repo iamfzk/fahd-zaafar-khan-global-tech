@@ -1,0 +1,17 @@
+{
+  "name": "FZK Global Technologies",
+  "short_name": "FZK Tech",
+  "description": "Java Full Stack Development, Spring Boot APIs, Cloud Solutions and Modern Web Applications",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f4c81",
+  "theme_color": "#0f4c81",
+  "icons": [
+    {
+      "src": "assets/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

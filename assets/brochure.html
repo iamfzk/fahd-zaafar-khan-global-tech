@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FZK - Building Scalable APIs Guide</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 700px; margin: 40px auto; padding: 24px; line-height: 1.7; color: #1e293b; }
+        h1 { color: #0f4c81; border-bottom: 2px solid #00d4aa; padding-bottom: 8px; }
+        h2 { color: #0f4c81; margin-top: 32px; }
+        .logo { font-weight: 800; color: #0f4c81; }
+        code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; }
+        ul { margin: 16px 0; }
+        .footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid #e2e8f0; font-size: 0.9rem; color: #64748b; }
+    </style>
+</head>
+<body>
+    <h1>Building Scalable APIs – Best Practices</h1>
+    <p><span class="logo">FZK Global Technologies</span> – Spring Boot & REST API Guide</p>
+
+    <h2>1. Design Principles</h2>
+    <ul>
+        <li>Use RESTful conventions: proper HTTP methods (GET, POST, PUT, DELETE)</li>
+        <li>Version your API (e.g. <code>/api/v1/</code>)</li>
+        <li>Keep URLs resource-based and plural (e.g. <code>/users</code>, <code>/orders</code>)</li>
+    </ul>
+
+    <h2>2. Spring Boot Best Practices</h2>
+    <ul>
+        <li>Use <code>@RestController</code> and <code>@RequestMapping</code> consistently</li>
+        <li>Implement global exception handling with <code>@ControllerAdvice</code></li>
+        <li>Use DTOs for request/response – never expose entities directly</li>
+        <li>Enable validation with <code>@Valid</code> and Bean Validation</li>
+    </ul>
+
+    <h2>3. Security & Performance</h2>
+    <ul>
+        <li>Add Spring Security for authentication (JWT, OAuth2)</li>
+        <li>Implement rate limiting and caching where appropriate</li>
+        <li>Use connection pooling for database access</li>
+        <li>Document APIs with Swagger/OpenAPI</li>
+    </ul>
+
+    <div class="footer">
+        <p>Copyright © FZK Global Technologies. For custom API development, contact us at fahdzaafarkhanglobaltechnology@gmail.com</p>
+    </div>
+</body>
+</html>
