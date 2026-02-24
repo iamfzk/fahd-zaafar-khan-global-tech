@@ -20,6 +20,14 @@ Visit [fzk-global-tech](https://iamfzk.github.io/fahd-zaafar-khan-global-tech/) 
 - Sitemap, robots.txt, security.txt
 - Cookie consent, keyboard shortcuts
 
+## Deploy (GitHub Pages)
+
+The site deploys automatically on push to `main` via GitHub Actions. Enable it once:
+
+1. Repo **Settings** → **Pages**
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**
+3. After the next push, the site will be live at: **https://iamfzk.github.io/fahd-zaafar-khan-global-tech/**
+
 ## Local Development
 
 Open `index.html` in a browser or use a local server:
