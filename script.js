@@ -5,6 +5,8 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     initPageLoader();
+    initLanguageSwitcher();
+    initQuickProjectSelect();
     initScrollProgress();
     initNavbar();
     initMobileMenu();
@@ -172,7 +174,7 @@ function initActiveNavLink() {
  */
 function initScrollReveal() {
     const revealElements = document.querySelectorAll(
-        '.section-header, .service-card, .tech-item, .project-card, .about-content, .skill-item, .faq-item, .team-card, .cert-badge, .client-logo, .testimonials-slider, .process-step, .pricing-card, .timeline-item, .map-wrapper'
+        '.section-header, .service-card, .tech-item, .project-card, .about-content, .skill-item, .faq-item, .team-card, .cert-badge, .client-logo, .testimonials-slider, .process-step, .pricing-card, .timeline-item, .map-wrapper, .compare-table-wrap, .as-seen-logos, .industry-tags'
     );
 
     const revealOptions = {
@@ -236,26 +238,100 @@ function initCounterAnimation() {
 }
 
 /**
- * Typing animation in hero
+ * Language switcher (EN / Hindi / Urdu)
  */
-function initTypingAnimation() {
-    const phrases = [
-        'Java Full Stack Development',
-        'Spring Boot APIs',
-        'Cloud Solutions',
-        'Modern Web Applications',
-        'React & Angular Apps',
-        'Microservices Architecture'
-    ];
-    const typingEl = document.getElementById('typingText');
-    if (!typingEl) return;
+const TRANSLATIONS = {
+    en: {
+        heroTitle: 'Building Digital Solutions for the Future',
+        heroSubPrefix: 'We provide',
+        btnServices: 'Our Services',
+        btnContact: 'Contact Us',
+        typingPhrases: ['Java Full Stack Development', 'Spring Boot APIs', 'Cloud Solutions', 'Modern Web Applications', 'React & Angular Apps', 'Microservices Architecture']
+    },
+    hi: {
+        heroTitle: 'भविष्य के लिए डिजिटल समाधान निर्माण',
+        heroSubPrefix: 'हम प्रदान करते हैं',
+        btnServices: 'हमारी सेवाएं',
+        btnContact: 'संपर्क करें',
+        typingPhrases: ['Java फुल स्टैक डेवलपमेंट', 'Spring Boot APIs', 'क्लाउड सॉल्यूशन', 'आधुनिक वेब एप्लिकेशन', 'React और Angular ऐप्स', 'माइक्रोसर्विसेस आर्किटेक्चर']
+    },
+    ur: {
+        heroTitle: 'مستقبل کے لیے ڈیجیٹل حل کی تعمیر',
+        heroSubPrefix: 'ہم فراہم کرتے ہیں',
+        btnServices: 'ہماری خدمات',
+        btnContact: 'رابطہ کریں',
+        typingPhrases: ['Java Full Stack Development', 'Spring Boot APIs', 'کلاؤڈ حل', 'جدید ویب ایپلیکیشنز', 'React اور Angular ایپس', 'مائیکرو سروسز آرکیٹیکچر']
+    }
+};
 
-    let phraseIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    const typeSpeed = 80;
-    const deleteSpeed = 50;
-    const pauseTime = 2000;
+function initLanguageSwitcher() {
+    const switcher = document.getElementById('langSwitcher');
+    const dropdown = document.getElementById('langDropdown');
+    const wrap = document.querySelector('.lang-switcher-wrap');
+    const langLabel = switcher?.querySelector('span');
+
+    let currentLang = localStorage.getItem('fzk_lang') || 'en';
+    applyLanguage(currentLang, { isInitialLoad: true });
+    if (langLabel) langLabel.textContent = currentLang === 'en' ? 'EN' : currentLang === 'hi' ? 'हि' : 'اردو';
+    if (document.documentElement.lang !== currentLang) document.documentElement.lang = currentLang === 'ur' ? 'ur' : currentLang === 'hi' ? 'hi' : 'en';
+
+    switcher?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        wrap?.classList.toggle('open');
+    });
+
+    dropdown?.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const lang = btn.getAttribute('data-lang');
+            currentLang = lang;
+            applyLanguage(lang, { isInitialLoad: false });
+            localStorage.setItem('fzk_lang', lang);
+            if (langLabel) langLabel.textContent = lang === 'en' ? 'EN' : lang === 'hi' ? 'हि' : 'اردو';
+            wrap?.classList.remove('open');
+        });
+    });
+
+    document.addEventListener('click', () => wrap?.classList.remove('open'));
+}
+
+/**
+ * Quick project selector - scroll to contact and pre-fill project type
+ */
+function initQuickProjectSelect() {
+    document.querySelectorAll('.quick-select-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const type = btn.getAttribute('data-type');
+            const select = document.getElementById('projectType');
+            if (select && type) {
+                select.value = type;
+            }
+        });
+    });
+}
+
+function applyLanguage(lang, opts = {}) {
+    const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
+    const heroTitle = document.getElementById('heroTitle');
+    const heroSubPrefix = document.getElementById('heroSubPrefix');
+    const btnServices = document.getElementById('btnServices');
+    const btnContact = document.getElementById('btnContact');
+    const typingEl = document.getElementById('typingText');
+
+    if (heroTitle) heroTitle.textContent = t.heroTitle;
+    if (heroSubPrefix) heroSubPrefix.textContent = t.heroSubPrefix;
+    if (btnServices) btnServices.textContent = t.btnServices;
+    if (btnContact) btnContact.textContent = t.btnContact;
+
+    if (!opts.isInitialLoad && typingEl && t.typingPhrases) {
+        startTypingAnimation(t.typingPhrases, typingEl);
+    }
+}
+
+function startTypingAnimation(phrases, typingEl) {
+    if (!typingEl || !phrases?.length) return;
+    if (window.__typingInterval) clearTimeout(window.__typingInterval);
+    let phraseIndex = 0, charIndex = 0, isDeleting = false;
+    const typeSpeed = 80, deleteSpeed = 50, pauseTime = 2000;
 
     function type() {
         const current = phrases[phraseIndex];
@@ -266,7 +342,6 @@ function initTypingAnimation() {
             typingEl.textContent = current.substring(0, charIndex + 1);
             charIndex++;
         }
-
         let delay = isDeleting ? deleteSpeed : typeSpeed;
         if (!isDeleting && charIndex === current.length) {
             delay = pauseTime;
@@ -276,9 +351,20 @@ function initTypingAnimation() {
             phraseIndex = (phraseIndex + 1) % phrases.length;
             delay = 500;
         }
-        setTimeout(type, delay);
+        window.__typingInterval = setTimeout(type, delay);
     }
-    setTimeout(type, 1000);
+    type();
+}
+
+/**
+ * Typing animation in hero
+ */
+function initTypingAnimation() {
+    const lang = localStorage.getItem('fzk_lang') || 'en';
+    const phrases = (TRANSLATIONS[lang] || TRANSLATIONS.en).typingPhrases;
+    const typingEl = document.getElementById('typingText');
+    if (!typingEl) return;
+    setTimeout(() => startTypingAnimation(phrases, typingEl), 1000);
 }
 
 /**

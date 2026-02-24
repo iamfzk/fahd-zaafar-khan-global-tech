@@ -138,6 +138,7 @@
                 <li><a href="#home" class="nav-link active">Home</a></li>
                 <li><a href="#about" class="nav-link">About Us</a></li>
                 <li><a href="#video" class="nav-link">Video</a></li>
+                <li><a href="#compare" class="nav-link">Compare</a></li>
                 <li><a href="#why-us" class="nav-link">Why Us</a></li>
                 <li><a href="#timeline" class="nav-link">Journey</a></li>
                 <li><a href="#services" class="nav-link">Services</a></li>
@@ -152,6 +153,18 @@
                 <li><a href="#faq" class="nav-link">FAQ</a></li>
                 <li><a href="#careers" class="nav-link">Careers</a></li>
                 <li><a href="#contact" class="nav-link nav-contact">Contact</a></li>
+                <li class="lang-switcher-wrap">
+                    <button class="lang-switcher" id="langSwitcher" aria-label="Change language" title="Language">
+                        <i class="fas fa-globe"></i>
+                        <span>EN</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button data-lang="en">English</button>
+                        <button data-lang="hi">हिंदी</button>
+                        <button data-lang="ur">اردو</button>
+                    </div>
+                </li>
                 <li>
                     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
                         <i class="fas fa-moon"></i>
@@ -169,11 +182,24 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <span class="reading-time" id="readingTime" title="Estimated reading time"><i class="fas fa-clock"></i> ~5 min read</span>
-            <h1 class="hero-title animate-fade-in">Building Digital Solutions for the Future</h1>
-            <p class="hero-subtitle animate-fade-in delay-1">We provide <span class="typing-text" id="typingText"></span><span class="typing-cursor">|</span></p>
+            <h1 class="hero-title animate-fade-in" id="heroTitle" data-translate="heroTitle">Building Digital Solutions for the Future</h1>
+            <p class="hero-subtitle animate-fade-in delay-1"><span id="heroSubPrefix" data-translate="heroSubPrefix">We provide</span> <span class="typing-text" id="typingText"></span><span class="typing-cursor">|</span></p>
             <div class="hero-buttons animate-fade-in delay-2">
-                <a href="#services" class="btn btn-primary" title="View our services">Our Services</a>
-                <a href="#contact" class="btn btn-secondary" title="Get in touch">Contact Us</a>
+                <a href="#services" class="btn btn-primary" id="btnServices" data-translate="btnServices" title="View our services">Our Services</a>
+                <a href="#contact" class="btn btn-secondary" id="btnContact" data-translate="btnContact" title="Get in touch">Contact Us</a>
+            </div>
+            <div class="hero-quick-select animate-fade-in delay-2">
+                <span class="quick-select-label">I need:</span>
+                <div class="quick-select-btns">
+                    <a href="#contact" class="quick-select-btn" data-type="Web App"><i class="fas fa-globe"></i> Web App</a>
+                    <a href="#contact" class="quick-select-btn" data-type="API"><i class="fas fa-plug"></i> API</a>
+                    <a href="#contact" class="quick-select-btn" data-type="Full Stack"><i class="fas fa-layer-group"></i> Full Stack</a>
+                    <a href="#contact" class="quick-select-btn" data-type="Enterprise"><i class="fas fa-building"></i> Enterprise</a>
+                </div>
+            </div>
+            <div class="urgency-badge animate-fade-in delay-2">
+                <i class="fas fa-bolt"></i>
+                <span>Limited consultation slots this month — <a href="#contact">Book free call</a></span>
             </div>
         </div>
         <div class="hero-scroll">
@@ -207,6 +233,36 @@
             </div>
         </div>
     </div>
+
+    <!-- Industry Focus -->
+    <div class="industry-strip">
+        <div class="container">
+            <p class="industry-label">Serving Industries</p>
+            <div class="industry-tags">
+                <span><i class="fas fa-university"></i> Banking</span>
+                <span><i class="fas fa-shield-alt"></i> Insurance</span>
+                <span><i class="fas fa-hospital"></i> Healthcare</span>
+                <span><i class="fas fa-shopping-cart"></i> E-Commerce</span>
+                <span><i class="fas fa-credit-card"></i> FinTech</span>
+                <span><i class="fas fa-graduation-cap"></i> EdTech</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- As Seen In -->
+    <section class="as-seen-in">
+        <div class="container">
+            <p class="as-seen-label">As Seen In & Trusted By</p>
+            <div class="as-seen-logos">
+                <div class="as-seen-item" title="LinkedIn"><i class="fab fa-linkedin"></i><span>LinkedIn</span></div>
+                <div class="as-seen-item" title="GitHub"><i class="fab fa-github"></i><span>GitHub</span></div>
+                <div class="as-seen-item" title="Fiverr"><i class="fas fa-briefcase"></i><span>Fiverr</span></div>
+                <div class="as-seen-item" title="G2"><i class="fas fa-star"></i><span>G2</span></div>
+                <div class="as-seen-item" title="AWS"><i class="fab fa-aws"></i><span>AWS</span></div>
+                <div class="as-seen-item" title="Google"><i class="fab fa-google"></i><span>Google</span></div>
+            </div>
+        </div>
+    </section>
 
     <!-- Timeline Section -->
     <section id="timeline" class="section timeline-section">
@@ -298,6 +354,60 @@
             <div class="video-wrapper">
                 <!-- Replace VIDEO_ID with your YouTube video ID (e.g. from youtube.com/watch?v=VIDEO_ID) -->
                 <iframe src="https://www.youtube.com/embed/TlB_eWDSMt4?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" title="FZK Global Technologies - Introduction"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table: FZK vs Others -->
+    <section id="compare" class="section compare-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Why FZK</span>
+                <h2 class="section-title">FZK vs Others</h2>
+                <p class="section-subtitle">See why clients choose us over other development agencies</p>
+            </div>
+            <div class="compare-table-wrap">
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th class="highlight-col"><i class="fas fa-check-circle"></i> FZK Global Tech</th>
+                            <th>Typical Agencies</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Transparent Pricing</td>
+                            <td class="highlight-col"><i class="fas fa-check"></i> Fixed quotes, no hidden costs</td>
+                            <td><i class="fas fa-times"></i> Often scope creep & extra charges</td>
+                        </tr>
+                        <tr>
+                            <td>Response Time</td>
+                            <td class="highlight-col"><i class="fas fa-check"></i> Within 2 hours</td>
+                            <td><i class="fas fa-times"></i> 24–48 hours or more</td>
+                        </tr>
+                        <tr>
+                            <td>Code Quality</td>
+                            <td class="highlight-col"><i class="fas fa-check"></i> Clean, documented, maintainable</td>
+                            <td><i class="fas fa-times"></i> Technical debt common</td>
+                        </tr>
+                        <tr>
+                            <td>Post-Launch Support</td>
+                            <td class="highlight-col"><i class="fas fa-check"></i> 6–12 months included</td>
+                            <td><i class="fas fa-times"></i> Often extra cost</td>
+                        </tr>
+                        <tr>
+                            <td>NDA & Security</td>
+                            <td class="highlight-col"><i class="fas fa-check"></i> Standard practice</td>
+                            <td><i class="fas fa-minus"></i> Varies</td>
+                        </tr>
+                        <tr>
+                            <td>Tech Stack</td>
+                            <td class="highlight-col"><i class="fas fa-check"></i> Java, Spring Boot, AWS, React</td>
+                            <td><i class="fas fa-minus"></i> May use outdated tech</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
