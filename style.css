@@ -709,18 +709,10 @@ body.dark-mode .theme-toggle i.fa-sun {
     max-width: 900px;
 }
 
-.reading-time {
-    display: inline-block;
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.8);
-    margin-bottom: 16px;
-    padding: 6px 14px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 50px;
-}
-
-.reading-time i {
-    margin-right: 6px;
+/* Removed: reading-time badge & print button */
+.reading-time,
+.print-btn {
+    display: none !important;
 }
 
 .hero-title {

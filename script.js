@@ -6,7 +6,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     initReducedMotion();
     initPageLoader();
-    initReadingTime();
     initLanguageSwitcher();
     initQuickProjectSelect();
     initScrollProgress();
@@ -53,26 +52,6 @@ function initReducedMotion() {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) {
         document.body.classList.add('reduce-motion');
-    }
-}
-
-/**
- * Dynamic reading time based on main content word count
- */
-function initReadingTime() {
-    const el = document.getElementById('readingTime');
-    if (!el) return;
-    const main = document.querySelector('main') || document.body;
-    const sections = document.querySelectorAll('.section .container');
-    let text = '';
-    sections.forEach(s => { text += (s.textContent || ''); });
-    const words = text.trim().split(/\s+/).filter(Boolean).length;
-    const mins = Math.max(1, Math.ceil(words / 200));
-    const label = el.querySelector('span') ? el : el;
-    if (el.querySelector('i')) {
-        el.innerHTML = '<i class="fas fa-clock"></i> ~' + mins + ' min read';
-    } else {
-        el.textContent = '~' + mins + ' min read';
     }
 }
 
@@ -279,21 +258,21 @@ const TRANSLATIONS = {
         heroSubPrefix: 'We provide',
         btnServices: 'Our Services',
         btnContact: 'Contact Us',
-        typingPhrases: ['Java Full Stack Development', 'Spring Boot APIs', 'Cloud Solutions', 'Modern Web Applications', 'React & Angular Apps', 'Microservices Architecture']
+        typingPhrases: ['Java Full Stack Development', 'Spring Boot APIs', 'Cloud Solutions', 'AI Engineer Solutions', 'React & Angular Apps', 'Microservices Architecture']
     },
     hi: {
         heroTitle: 'भविष्य के लिए डिजिटल समाधान निर्माण',
         heroSubPrefix: 'हम प्रदान करते हैं',
         btnServices: 'हमारी सेवाएं',
         btnContact: 'संपर्क करें',
-        typingPhrases: ['Java फुल स्टैक डेवलपमेंट', 'Spring Boot APIs', 'क्लाउड सॉल्यूशन', 'आधुनिक वेब एप्लिकेशन', 'React और Angular ऐप्स', 'माइक्रोसर्विसेस आर्किटेक्चर']
+        typingPhrases: ['Java फुल स्टैक डेवलपमेंट', 'Spring Boot APIs', 'क्लाउड सॉल्यूशन', 'AI Engineer सॉल्यूशन', 'React और Angular ऐप्स', 'माइक्रोसर्विसेस आर्किटेक्चर']
     },
     ur: {
         heroTitle: 'مستقبل کے لیے ڈیجیٹل حل کی تعمیر',
         heroSubPrefix: 'ہم فراہم کرتے ہیں',
         btnServices: 'ہماری خدمات',
         btnContact: 'رابطہ کریں',
-        typingPhrases: ['Java Full Stack Development', 'Spring Boot APIs', 'کلاؤڈ حل', 'جدید ویب ایپلیکیشنز', 'React اور Angular ایپس', 'مائیکرو سروسز آرکیٹیکچر']
+        typingPhrases: ['Java Full Stack Development', 'Spring Boot APIs', 'کلاؤڈ حل', 'AI Engineer Solutions', 'React اور Angular ایپس', 'مائیکرو سروسز آرکیٹیکچر']
     }
 };
 
