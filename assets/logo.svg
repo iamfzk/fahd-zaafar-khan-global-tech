@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" role="img" aria-label="FZK Global Technologies">
   <defs>
     <linearGradient id="bg" x1="8" y1="8" x2="112" y2="112" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#0a3d6b"/>
-      <stop offset="0.45" stop-color="#0f4c81"/>
-      <stop offset="1" stop-color="#1a6bb3"/>
+      <stop stop-color="#8b1515"/>
+      <stop offset="0.45" stop-color="#c41e1e"/>
+      <stop offset="1" stop-color="#e03535"/>
     </linearGradient>
     <linearGradient id="growth" x1="20" y1="95" x2="100" y2="28" gradientUnits="userSpaceOnUse">
       <stop stop-color="#00b894"/>
