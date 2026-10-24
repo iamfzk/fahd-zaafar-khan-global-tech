@@ -55,19 +55,149 @@ function initReducedMotion() {
 }
 
 /**
- * Click-to-play video (faster page load + better UX)
+ * Video playlist: play / add / remove (localStorage)
+ * Default: Spring Boot Microservices (OktaDev) — replaced old Node.js placeholder
  */
 function initVideoPlayer() {
+    const STORAGE_KEY = 'fzk_video_playlist';
     const player = document.getElementById('videoPlayer');
-    const btn = document.getElementById('videoPlayBtn');
-    if (!player || !btn) return;
+    const playlistEl = document.getElementById('videoPlaylist');
+    const addForm = document.getElementById('videoAddForm');
+    if (!player || !playlistEl) return;
 
-    const play = () => {
-        const id = player.getAttribute('data-video-id') || 'TlB_eWDSMt4';
-        player.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" title="FZK Global Technologies - Introduction" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-    };
+    const defaults = [
+        {
+            id: 'm-lhymNdPBc',
+            title: 'Java Microservices with Spring Boot & Spring Cloud',
+            meta: '~11 min · HD'
+        }
+    ];
 
-    btn.addEventListener('click', play);
+    function loadList() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (Array.isArray(parsed) && parsed.length) return parsed;
+            }
+        } catch (_) {}
+        return defaults.slice();
+    }
+
+    function saveList(list) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    function extractId(input) {
+        if (!input) return '';
+        const s = input.trim();
+        if (/^[\w-]{11}$/.test(s)) return s;
+        try {
+            const u = new URL(s);
+            if (u.hostname.includes('youtu.be')) return u.pathname.slice(1).split('/')[0];
+            if (u.searchParams.get('v')) return u.searchParams.get('v');
+            const parts = u.pathname.split('/');
+            const embedIdx = parts.indexOf('embed');
+            if (embedIdx >= 0 && parts[embedIdx + 1]) return parts[embedIdx + 1];
+            const shortsIdx = parts.indexOf('shorts');
+            if (shortsIdx >= 0 && parts[shortsIdx + 1]) return parts[shortsIdx + 1];
+        } catch (_) {}
+        return '';
+    }
+
+    let list = loadList();
+    // Migrate away from old Node.js placeholder if still present as only video
+    if (list.length === 1 && list[0].id === 'TlB_eWDSMt4') {
+        list = defaults.slice();
+        saveList(list);
+    }
+
+    let activeId = list[0]?.id || defaults[0].id;
+
+    function showFacade(video) {
+        player.setAttribute('data-video-id', video.id);
+        player.innerHTML = `
+            <button type="button" class="video-facade" id="videoPlayBtn" aria-label="Play video">
+                <div class="video-facade-bg" aria-hidden="true"></div>
+                <div class="video-facade-content">
+                    <span class="video-play-ring"><i class="fas fa-play"></i></span>
+                    <span class="video-facade-label">${video.title}</span>
+                    <span class="video-facade-meta"><i class="fas fa-clock"></i> ${video.meta || 'YouTube'}</span>
+                </div>
+            </button>`;
+        document.getElementById('videoPlayBtn')?.addEventListener('click', () => playVideo(video));
+    }
+
+    function playVideo(video) {
+        activeId = video.id;
+        player.setAttribute('data-video-id', video.id);
+        player.innerHTML = `<iframe src="https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0" title="${video.title.replace(/"/g, '')}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        renderPlaylist();
+    }
+
+    function renderPlaylist() {
+        playlistEl.innerHTML = list.map((v) => `
+            <li class="video-playlist-item${v.id === activeId ? ' active' : ''}" data-id="${v.id}">
+                <button type="button" class="video-playlist-play" title="Play">
+                    <i class="fas fa-play"></i>
+                    <span>${v.title}</span>
+                </button>
+                <button type="button" class="video-playlist-remove" title="Remove" aria-label="Remove ${v.title}">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </li>`).join('') || '<li class="video-playlist-empty">No videos. Add one below.</li>';
+
+        playlistEl.querySelectorAll('.video-playlist-item').forEach((li) => {
+            const id = li.getAttribute('data-id');
+            const video = list.find((x) => x.id === id);
+            li.querySelector('.video-playlist-play')?.addEventListener('click', () => {
+                if (video) playVideo(video);
+            });
+            li.querySelector('.video-playlist-remove')?.addEventListener('click', () => {
+                if (list.length <= 1) {
+                    showNotification('At least one video required', 'error');
+                    return;
+                }
+                list = list.filter((x) => x.id !== id);
+                saveList(list);
+                if (activeId === id) {
+                    activeId = list[0].id;
+                    showFacade(list[0]);
+                }
+                renderPlaylist();
+                showNotification('Video removed', 'success');
+            });
+        });
+    }
+
+    addForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const url = document.getElementById('videoAddUrl')?.value || '';
+        const titleInput = document.getElementById('videoAddTitle')?.value?.trim();
+        const id = extractId(url);
+        if (!id) {
+            showNotification('Invalid YouTube link', 'error');
+            return;
+        }
+        if (list.some((v) => v.id === id)) {
+            showNotification('Video already in playlist', 'error');
+            return;
+        }
+        const video = {
+            id,
+            title: titleInput || `YouTube video (${id})`,
+            meta: 'YouTube'
+        };
+        list.push(video);
+        saveList(list);
+        addForm.reset();
+        renderPlaylist();
+        showNotification('Video added', 'success');
+    });
+
+    const current = list.find((v) => v.id === activeId) || list[0];
+    showFacade(current);
+    renderPlaylist();
 }
 
 /**

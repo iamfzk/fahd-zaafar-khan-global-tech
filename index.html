@@ -24,7 +24,7 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f4c81">
     <link rel="canonical" href="https://fzkglobaltech.com/">
-    <link rel="stylesheet" href="style.css?v=7">
+    <link rel="stylesheet" href="style.css?v=8">
     <link rel="dns-prefetch" href="https://formsubmit.co">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,7 +71,7 @@
     }
     </script>
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"VideoObject","name":"FZK Global Technologies Introduction","description":"Introduction to FZK Global Technologies - IT Solutions","thumbnailUrl":"https://img.youtube.com/vi/TlB_eWDSMt4/maxresdefault.jpg","uploadDate":"2024-01-01","contentUrl":"https://www.youtube.com/watch?v=TlB_eWDSMt4","embedUrl":"https://www.youtube.com/embed/TlB_eWDSMt4"}
+    {"@context":"https://schema.org","@type":"VideoObject","name":"Java Microservices with Spring Boot and Spring Cloud","description":"Spring Boot microservices overview relevant to FZK Global Technologies stack","thumbnailUrl":"https://img.youtube.com/vi/m-lhymNdPBc/maxresdefault.jpg","uploadDate":"2024-01-11","contentUrl":"https://www.youtube.com/watch?v=m-lhymNdPBc","embedUrl":"https://www.youtube.com/embed/m-lhymNdPBc"}
     </script>
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://fzkglobaltech.com/"},{"@type":"ListItem","position":2,"name":"Services","item":"https://fzkglobaltech.com/#services"},{"@type":"ListItem","position":3,"name":"Contact","item":"https://fzkglobaltech.com/#contact"}]}
@@ -389,15 +389,15 @@
                 <p class="section-subtitle">AI-powered engineering, clean architecture, and delivery you can trust</p>
             </div>
             <div class="video-showcase">
-                <div class="video-player" id="videoPlayer" data-video-id="TlB_eWDSMt4">
+                <div class="video-player" id="videoPlayer" data-video-id="m-lhymNdPBc">
                     <button type="button" class="video-facade" id="videoPlayBtn" aria-label="Play introduction video">
                         <div class="video-facade-bg" aria-hidden="true"></div>
                         <div class="video-facade-content">
                             <span class="video-play-ring">
                                 <i class="fas fa-play"></i>
                             </span>
-                            <span class="video-facade-label">Watch company intro</span>
-                            <span class="video-facade-meta"><i class="fas fa-clock"></i> ~2 min · HD</span>
+                            <span class="video-facade-label" id="videoFacadeLabel">Spring Boot Microservices</span>
+                            <span class="video-facade-meta"><i class="fas fa-clock"></i> <span id="videoFacadeMeta">~11 min · HD</span></span>
                         </div>
                     </button>
                 </div>
@@ -411,6 +411,19 @@
                     </ul>
                     <a href="#contact" class="btn btn-primary video-cta">Discuss your project</a>
                 </aside>
+            </div>
+
+            <div class="video-manager">
+                <div class="video-manager-header">
+                    <h3><i class="fas fa-list"></i> Video playlist</h3>
+                    <p>Play, remove, or add a YouTube video (saved in this browser)</p>
+                </div>
+                <ul class="video-playlist" id="videoPlaylist" aria-label="Video playlist"></ul>
+                <form class="video-add-form" id="videoAddForm">
+                    <input type="url" id="videoAddUrl" placeholder="Paste YouTube link (e.g. youtube.com/watch?v=...)" required>
+                    <input type="text" id="videoAddTitle" placeholder="Title (optional)" maxlength="80">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Add video</button>
+                </form>
             </div>
         </div>
     </section>
@@ -1511,7 +1524,7 @@
         </div>
     </footer>
 
-    <script src="script.js?v=7"></script>
+    <script src="script.js?v=8"></script>
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').catch(() => {});
