@@ -1,36 +1,36 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" role="img" aria-label="FZK Global Technologies">
   <defs>
     <linearGradient id="bg" x1="8" y1="8" x2="112" y2="112" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#8b1515"/>
-      <stop offset="0.45" stop-color="#c41e1e"/>
-      <stop offset="1" stop-color="#e03535"/>
+      <stop stop-color="#8b1212"/>
+      <stop offset="0.45" stop-color="#c41e3a"/>
+      <stop offset="1" stop-color="#e11d48"/>
     </linearGradient>
     <linearGradient id="growth" x1="20" y1="95" x2="100" y2="28" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#00b894"/>
-      <stop offset="1" stop-color="#2ee6c0"/>
+      <stop stop-color="#fbbf24"/>
+      <stop offset="1" stop-color="#fde68a"/>
     </linearGradient>
   </defs>
 
   <!-- Rounded mark -->
   <rect x="5" y="5" width="110" height="110" rx="24" fill="url(#bg)"/>
-  <rect x="9" y="9" width="102" height="102" rx="20" stroke="#fff" stroke-opacity="0.07" fill="none"/>
+  <rect x="9" y="9" width="102" height="102" rx="20" stroke="#fff" stroke-opacity="0.1" fill="none"/>
 
   <!-- Ascending growth bars -->
-  <g fill="#00d4aa">
-    <rect x="20" y="82" width="10" height="18" rx="3" opacity="0.45"/>
-    <rect x="33" y="70" width="10" height="30" rx="3" opacity="0.65"/>
-    <rect x="46" y="54" width="10" height="46" rx="3" opacity="0.85"/>
+  <g fill="#fbbf24">
+    <rect x="20" y="82" width="10" height="18" rx="3" opacity="0.5"/>
+    <rect x="33" y="70" width="10" height="30" rx="3" opacity="0.7"/>
+    <rect x="46" y="54" width="10" height="46" rx="3" opacity="0.9"/>
   </g>
 
   <!-- Rising trajectory -->
   <path d="M22 90 C40 88, 50 68, 60 56 C72 42, 82 34, 96 28"
         stroke="url(#growth)" stroke-width="3.4" stroke-linecap="round" fill="none"/>
   <!-- Arrow head -->
-  <path d="M90.5 24.5 L100 27.5 L93.5 35.5 Z" fill="#00d4aa"/>
+  <path d="M90.5 24.5 L100 27.5 L93.5 35.5 Z" fill="#fbbf24"/>
   <!-- Milestone dots -->
   <circle cx="48" cy="69" r="2.8" fill="#fff"/>
   <circle cx="70" cy="46" r="2.8" fill="#fff"/>
-  <circle cx="96" cy="28" r="3.4" fill="#00d4aa" stroke="#fff" stroke-width="1.5"/>
+  <circle cx="96" cy="28" r="3.4" fill="#fbbf24" stroke="#fff" stroke-width="1.5"/>
 
   <!-- FZK -->
   <text x="60" y="76" text-anchor="middle" fill="#ffffff"
