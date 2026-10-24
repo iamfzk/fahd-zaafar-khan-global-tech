@@ -1703,7 +1703,7 @@ body.dark-mode .compare-table .highlight-col {
     color: var(--accent);
 }
 
-/* Sticky CTA Bar */
+/* Sticky CTA Bar — bottom center, no overlapping FABs */
 .sticky-cta {
     position: fixed;
     bottom: 0;
@@ -1711,8 +1711,8 @@ body.dark-mode .compare-table .highlight-col {
     right: 0;
     background: var(--dark);
     color: var(--white);
-    padding: 16px 24px;
-    z-index: 996;
+    padding: 14px 24px;
+    z-index: 995;
     transform: translateY(100%);
     transition: transform 0.4s ease;
     box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
@@ -1723,31 +1723,23 @@ body.dark-mode .compare-table .highlight-col {
 }
 
 .sticky-cta-content {
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 24px;
+    justify-content: center;
+    gap: 20px;
     flex-wrap: wrap;
 }
 
 .sticky-cta span {
     font-weight: 600;
+    font-size: 0.95rem;
 }
 
 .sticky-cta .btn {
     padding: 12px 24px;
-}
-
-.sticky-cta .btn-whatsapp {
-    background: #25D366;
-    color: white;
-    border: none;
-}
-
-.sticky-cta .btn-whatsapp:hover {
-    background: #20bd5a;
+    white-space: nowrap;
 }
 
 /* ============================================
@@ -3068,11 +3060,11 @@ select:focus-visible {
     margin-top: 8px;
 }
 
-/* Back to Top */
+/* Back to Top — bottom-left only */
 .back-to-top {
     position: fixed;
     bottom: 24px;
-    left: 24px;
+    left: 16px;
     width: 48px;
     height: 48px;
     background: var(--primary);
@@ -3101,37 +3093,19 @@ select:focus-visible {
     transform: translateY(-3px);
 }
 
-.quick-contact-btn {
-    position: fixed;
-    bottom: 90px;
-    left: 24px;
-    padding: 12px 18px;
-    background: var(--accent);
-    color: var(--dark);
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: var(--transition);
-    z-index: 998;
+/* Removed Quote FAB — sticky CTA handles quote */
+.quick-contact-btn,
+.share-float,
+.chat-widget {
+    display: none !important;
 }
 
-.quick-contact-btn:hover {
-    background: var(--accent-hover);
-    transform: translateY(-3px);
+/* When sticky CTA is open, lift FABs above it */
+body.has-sticky-cta .back-to-top {
+    bottom: 78px;
 }
-
-@media (max-width: 480px) {
-    .quick-contact-btn {
-        bottom: 200px;
-        padding: 10px 14px;
-        font-size: 0.85rem;
-    }
-    .quick-contact-btn span { display: none; }
+body.has-sticky-cta .floating-contact {
+    bottom: 78px;
 }
 
 /* Project Calculator */
@@ -3525,11 +3499,11 @@ select:focus-visible {
     }
 }
 
-/* Floating Contact Buttons */
+/* Floating Contact — bottom-right stack only (WhatsApp + Call) */
 .floating-contact {
     position: fixed;
     bottom: 24px;
-    right: 24px;
+    right: 16px;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -3942,18 +3916,36 @@ select:focus-visible {
 
 @media (max-width: 480px) {
     .back-to-top {
-        bottom: 90px;
+        bottom: 20px;
+        left: 12px;
+        width: 44px;
+        height: 44px;
     }
 
     .floating-contact {
-        bottom: 24px;
-        right: 16px;
+        bottom: 20px;
+        right: 12px;
+    }
+
+    body.has-sticky-cta .back-to-top,
+    body.has-sticky-cta .floating-contact {
+        bottom: 72px;
     }
 
     .floating-btn {
         width: 48px;
         height: 48px;
         font-size: 1.25rem;
+    }
+
+    .sticky-cta {
+        padding: 12px 16px;
+    }
+
+    .sticky-cta span {
+        font-size: 0.85rem;
+        text-align: center;
+        width: 100%;
     }
 
     .project-filters {

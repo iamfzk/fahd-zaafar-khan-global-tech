@@ -36,12 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initExitPopup();
     initCalculator();
     initTechSearch();
-    initChatWidget();
     initKeyboardShortcuts();
     initROICalculator();
     initPWAInstall();
     initCharCount();
-    initQuickContact();
     initFooterYear();
 });
 
@@ -678,11 +676,17 @@ function initParticles() {
 }
 
 /**
- * Sticky CTA bar - show on scroll
+ * Sticky CTA bar - show on scroll; lift FABs so nothing overlaps
  */
 function initStickyCta() {
     const cta = document.getElementById('stickyCta');
     let lastScroll = 0;
+
+    function syncFabOffset() {
+        const open = cta?.classList.contains('visible');
+        document.body.classList.toggle('has-sticky-cta', !!open);
+    }
+
     window.addEventListener('scroll', () => {
         if (window.scrollY > 600 && window.scrollY > lastScroll) {
             cta?.classList.add('visible');
@@ -690,7 +694,9 @@ function initStickyCta() {
             cta?.classList.remove('visible');
         }
         lastScroll = window.scrollY;
+        syncFabOffset();
     });
+    syncFabOffset();
 }
 
 /**
