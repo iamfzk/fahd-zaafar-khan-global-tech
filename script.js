@@ -949,7 +949,7 @@ function initKeyboardShortcuts() {
 }
 
 /**
- * FZK AI Assistant — on-site smart chatbot (services, pricing, contact)
+ * FZK AI Assistant — EN / Hindi / Arabic smart chatbot
  */
 function initAiAssistant() {
     const root = document.getElementById('aiAssistant');
@@ -960,89 +960,255 @@ function initAiAssistant() {
     const input = document.getElementById('aiInput');
     const messages = document.getElementById('aiMessages');
     const chipsEl = document.getElementById('aiChips');
+    const langGroup = document.getElementById('aiLang');
+    const statusText = document.getElementById('aiStatusText');
     if (!root || !toggle || !panel || !messages) return;
 
     const WA = 'https://wa.me/917728855804?text=' + encodeURIComponent("Hi, I'd like to discuss a project with FZK Global Technologies.");
     const CONTACT = '#contact';
     const PHONE = 'tel:+917728855804';
+    const LANG_KEY = 'fzk_ai_lang';
+    let lang = localStorage.getItem(LANG_KEY) || 'en';
+    if (!['en', 'hi', 'ar'].includes(lang)) lang = 'en';
 
-    const chips = [
-        'Services',
-        'AI Engineer',
-        'Pricing',
-        'Timeline',
-        'Contact',
-        'Free call'
-    ];
+    const ui = {
+        en: {
+            status: 'Online · EN / हिं / ع',
+            placeholder: 'Ask in English / हिंदी / العربية…',
+            welcome: 'Hello! I am the <strong>FZK AI Assistant</strong>.\n\nAsk about AI Engineer, Java Full Stack, pricing, or timelines — in English, Hindi, or Arabic.\n\nQuick options below.',
+            chips: [
+                { id: 'services', label: 'Services' },
+                { id: 'ai', label: 'AI Engineer' },
+                { id: 'pricing', label: 'Pricing' },
+                { id: 'timeline', label: 'Timeline' },
+                { id: 'contact', label: 'Contact' },
+                { id: 'call', label: 'Free call' }
+            ]
+        },
+        hi: {
+            status: 'ऑनलाइन · EN / हिं / ع',
+            placeholder: 'अंग्रेज़ी / हिंदी / العربية में पूछें…',
+            welcome: 'नमस्ते! मैं <strong>FZK AI Assistant</strong> हूँ।\n\nAI Engineer, Java Full Stack, कीमत, टाइमलाइन — अंग्रेज़ी, हिंदी या अरबी में पूछ सकते हैं।\n\nनीचे क्विक विकल्प हैं।',
+            chips: [
+                { id: 'services', label: 'सेवाएँ' },
+                { id: 'ai', label: 'AI Engineer' },
+                { id: 'pricing', label: 'कीमत' },
+                { id: 'timeline', label: 'समय' },
+                { id: 'contact', label: 'संपर्क' },
+                { id: 'call', label: 'फ्री कॉल' }
+            ]
+        },
+        ar: {
+            status: 'متصل · EN / हिं / ع',
+            placeholder: 'اسأل بالإنجليزية / हिंदी / العربية…',
+            welcome: 'مرحبًا! أنا <strong>مساعد FZK الذكي</strong>.\n\nاسأل عن هندسة الذكاء الاصطناعي، Java Full Stack، الأسعار أو الجداول — بالإنجليزية أو الهندية أو العربية.\n\nخيارات سريعة بالأسفل.',
+            chips: [
+                { id: 'services', label: 'الخدمات' },
+                { id: 'ai', label: 'مهندس AI' },
+                { id: 'pricing', label: 'الأسعار' },
+                { id: 'timeline', label: 'المدة' },
+                { id: 'contact', label: 'تواصل' },
+                { id: 'call', label: 'مكالمة مجانية' }
+            ]
+        }
+    };
 
     const intents = [
         {
-            keys: ['hi', 'hello', 'hey', 'namaste', 'namaskar', 'hii', 'good morning', 'good evening', 'salaam'],
-            reply: 'Namaste! 👋 Main FZK AI Assistant hoon.\n\nAI Engineer, Java Full Stack, Spring Boot, microservices, Data Science aur AWS Cloud projects mein help karta hoon.\n\nKya jaanna chahte ho — services, pricing, ya free consultation?'
+            id: 'greet',
+            keys: ['hi', 'hello', 'hey', 'namaste', 'namaskar', 'hii', 'good morning', 'good evening', 'salaam', 'salam', 'مرحبا', 'السلام', 'اهلا', 'أهلا', 'नमस्ते', 'हेलो'],
+            replies: {
+                en: 'Hello! 👋 I am the FZK AI Assistant.\n\nI help with AI Engineer, Java Full Stack, Spring Boot microservices, Data Science, and AWS Cloud projects.\n\nWhat would you like to know — services, pricing, or a free consultation?',
+                hi: 'नमस्ते! 👋 मैं FZK AI Assistant हूँ।\n\nAI Engineer, Java Full Stack, Spring Boot, Data Science और AWS Cloud प्रोजेक्ट्स में मदद करता हूँ।\n\nक्या जानना चाहते हैं — सेवाएँ, कीमत, या फ्री सलाह?',
+                ar: 'مرحبًا! 👋 أنا مساعد FZK.\n\nأساعد في هندسة الذكاء الاصطناعي، Java Full Stack، Spring Boot، علوم البيانات، وسحابة AWS.\n\nماذا تريد أن تعرف — الخدمات، الأسعار، أم استشارة مجانية؟'
+            }
         },
         {
-            keys: ['service', 'services', 'kya karte', 'offer', 'what do you', 'solutions', 'kaam'],
-            reply: 'Hum ye deliver karte hain:\n• AI Engineer Solutions (LangChain, ML, automation)\n• Data Scientist with AI\n• Java Full Stack & Spring Boot microservices\n• REST APIs\n• React / Angular apps\n• AWS cloud deployment\n\nDetails: <a href="#services">Services</a>'
+            id: 'services',
+            keys: ['service', 'services', 'kya karte', 'offer', 'what do you', 'solutions', 'kaam', 'सेवा', 'خدمات', 'خدمة', 'ماذا تقدمون'],
+            replies: {
+                en: 'We deliver:\n• AI Engineer Solutions (LangChain, ML, automation)\n• Data Scientist with AI\n• Java Full Stack & Spring Boot microservices\n• REST APIs\n• React / Angular apps\n• AWS cloud deployment\n\nDetails: <a href="#services">Services</a>',
+                hi: 'हम ये देते हैं:\n• AI Engineer Solutions (LangChain, ML, automation)\n• Data Scientist with AI\n• Java Full Stack & Spring Boot microservices\n• REST APIs\n• React / Angular apps\n• AWS cloud deployment\n\nविवरण: <a href="#services">Services</a>',
+                ar: 'نقدّم:\n• حلول مهندس الذكاء الاصطناعي (LangChain، ML، الأتمتة)\n• عالم بيانات مع AI\n• Java Full Stack و Spring Boot\n• واجهات REST API\n• تطبيقات React / Angular\n• نشر سحابة AWS\n\nالتفاصيل: <a href="#services">Services</a>'
+            }
         },
         {
-            keys: ['ai engineer', 'ai ', 'artificial', 'ml', 'machine learning', 'langchain', 'chatgpt', 'llm', 'genai', 'generative'],
-            reply: 'AI Engineer Solutions: custom AI/ML systems, LangChain apps, intelligent automation, aur product mein AI features.\n\nUse-cases: chatbots, document AI, fraud detection, recommendations.\n\nProject discuss: <a href="' + CONTACT + '">Get Free Quote</a> · <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>'
+            id: 'ai',
+            keys: ['ai engineer', 'ai', 'artificial', 'machine learning', 'langchain', 'chatgpt', 'llm', 'genai', 'generative', 'مهندس', 'ذكاء اصطناعي', 'الذكاء'],
+            replies: {
+                en: 'AI Engineer Solutions: custom AI/ML systems, LangChain apps, intelligent automation, and AI features in your product.\n\nUse-cases: chatbots, document AI, fraud detection, recommendations.\n\nDiscuss: <a href="' + CONTACT + '">Get Free Quote</a> · <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>',
+                hi: 'AI Engineer Solutions: कस्टम AI/ML सिस्टम, LangChain ऐप्स, स्मार्ट ऑटोमेशन, और प्रोडक्ट में AI फीचर्स।\n\nउदाहरण: चैटबॉट, document AI, fraud detection, recommendations.\n\nबात करें: <a href="' + CONTACT + '">Get Free Quote</a> · <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>',
+                ar: 'حلول مهندس AI: أنظمة ذكاء اصطناعي مخصصة، تطبيقات LangChain، أتمتة ذكية، وميزات AI في منتجك.\n\nحالات الاستخدام: روبوتات محادثة، ذكاء المستندات، كشف الاحتيال، التوصيات.\n\nناقش معنا: <a href="' + CONTACT + '">عرض مجاني</a> · <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>'
+            }
         },
         {
-            keys: ['data scien', 'analytics', 'pipeline', 'predictive', 'dashboard'],
-            reply: 'Data Scientist with AI: data pipelines, predictive models, analytics dashboards, aur AI-driven insights — raw data se business decisions tak.\n\nBaat karni hai? <a href="' + CONTACT + '">Contact form</a>'
+            id: 'data',
+            keys: ['data scien', 'analytics', 'pipeline', 'predictive', 'dashboard', 'डेटा', 'بيانات', 'تحليلات'],
+            replies: {
+                en: 'Data Scientist with AI: data pipelines, predictive models, analytics dashboards, and AI-driven insights — from raw data to decisions.\n\nTalk to us: <a href="' + CONTACT + '">Contact form</a>',
+                hi: 'Data Scientist with AI: डेटा पाइपलाइन, प्रेडिक्टिव मॉडल, एनालिटिक्स डैशबोर्ड, और AI insights — डेटा से बिज़नेस निर्णय तक।\n\nबात करें: <a href="' + CONTACT + '">Contact form</a>',
+                ar: 'عالم بيانات مع AI: خطوط بيانات، نماذج تنبؤية، لوحات تحليلات، ورؤى مدعومة بالذكاء الاصطناعي.\n\nتواصل: <a href="' + CONTACT + '">نموذج التواصل</a>'
+            }
         },
         {
+            id: 'java',
             keys: ['java', 'spring', 'microservice', 'backend', 'api', 'rest'],
-            reply: 'Hum enterprise Java + Spring Boot microservices aur secure REST APIs banate hain — banking, insurance, healthcare style systems.\n\nDemo video: <a href="#video">See How We Build</a>'
+            replies: {
+                en: 'We build enterprise Java + Spring Boot microservices and secure REST APIs — banking, insurance, healthcare style systems.\n\nDemo: <a href="#video">See How We Build</a>',
+                hi: 'हम enterprise Java + Spring Boot microservices और सुरक्षित REST APIs बनाते हैं — banking, insurance, healthcare स्टाइल।\n\nडेमो: <a href="#video">See How We Build</a>',
+                ar: 'نبني أنظمة Java و Spring Boot وواجهات REST آمنة — بأسلوب البنوك والتأمين والرعاية الصحية.\n\nالعرض: <a href="#video">See How We Build</a>'
+            }
         },
         {
+            id: 'web',
             keys: ['react', 'angular', 'frontend', 'web app', 'full stack', 'fullstack'],
-            reply: 'Full-stack delivery: React / Angular frontends + Java Spring Boot backends, cloud-ready builds.\n\nQuote ke liye: <a href="' + CONTACT + '">Contact</a>'
+            replies: {
+                en: 'Full-stack delivery: React / Angular frontends + Java Spring Boot backends, cloud-ready builds.\n\nFor a quote: <a href="' + CONTACT + '">Contact</a>',
+                hi: 'Full-stack: React / Angular फ्रंटएंड + Java Spring Boot बैकएंड, cloud-ready।\n\nकोटेशन: <a href="' + CONTACT + '">Contact</a>',
+                ar: 'تطوير كامل: واجهات React / Angular + خلفية Java Spring Boot جاهزة للسحابة.\n\nعرض سعر: <a href="' + CONTACT + '">تواصل</a>'
+            }
         },
         {
-            keys: ['aws', 'cloud', 'deploy', 'kubernetes', 'docker', 'devops'],
-            reply: 'AWS / cloud deployment, Docker, CI/CD aur production monitoring setup milta hai.\n\nProject size batao — estimate de denge.'
+            id: 'cloud',
+            keys: ['aws', 'cloud', 'deploy', 'kubernetes', 'docker', 'devops', 'سحابة', 'كلاود'],
+            replies: {
+                en: 'AWS / cloud deployment, Docker, CI/CD, and production monitoring are available.\n\nShare your project size — we will estimate.',
+                hi: 'AWS / cloud deployment, Docker, CI/CD और production monitoring मिलता है।\n\nप्रोजेक्ट साइज़ बताएँ — अनुमान देंगे।',
+                ar: 'يتوفر نشر AWS والسحابة وDocker وCI/CD ومراقبة الإنتاج.\n\nأخبرنا بحجم مشروعك لنقدّر التكلفة.'
+            }
         },
         {
-            keys: ['price', 'pricing', 'cost', 'kitna', 'budget', 'quote', 'rate', 'charges', 'fees', 'paisa'],
-            reply: 'Plans (indicative):\n• Starter — basic web app, ~2 weeks\n• Professional — full-stack + APIs, 2–4 months\n• Enterprise — microservices + AWS, 6–12 months\n\nExact quote free consultation ke baad. Calculator: <a href="#calculator">Project Cost Calculator</a> · <a href="#pricing">Pricing</a>'
+            id: 'pricing',
+            keys: ['price', 'pricing', 'cost', 'kitna', 'budget', 'quote', 'rate', 'charges', 'fees', 'paisa', 'कीमत', 'मूल्य', 'سعر', 'أسعار', 'تكلفة'],
+            replies: {
+                en: 'Indicative plans:\n• Starter — basic web app, ~2 weeks\n• Professional — full-stack + APIs, 2–4 months\n• Enterprise — microservices + AWS, 6–12 months\n\nExact quote after free consultation. <a href="#calculator">Cost Calculator</a> · <a href="#pricing">Pricing</a>',
+                hi: 'अनुमानित प्लान:\n• Starter — बेसिक वेब ऐप, ~2 हफ़्ते\n• Professional — full-stack + APIs, 2–4 महीने\n• Enterprise — microservices + AWS, 6–12 महीने\n\nसटीक कोट फ्री सलाह के बाद। <a href="#calculator">Calculator</a> · <a href="#pricing">Pricing</a>',
+                ar: 'خطط تقريبية:\n• Starter — تطبيق ويب بسيط، ~أسبوعان\n• Professional — كامل + APIs، 2–4 أشهر\n• Enterprise — خدمات مصغّرة + AWS، 6–12 شهرًا\n\nالسعر الدقيق بعد استشارة مجانية. <a href="#calculator">حاسبة التكلفة</a> · <a href="#pricing">الأسعار</a>'
+            }
         },
         {
-            keys: ['time', 'timeline', 'kitne din', 'duration', 'how long', 'delivery', 'kab tak'],
-            reply: 'Typical timelines:\n• Small: 2–4 weeks\n• Medium: 2–4 months\n• Enterprise: 6–12 months\n\nScope clear hone ke baad exact estimate milta hai.'
+            id: 'timeline',
+            keys: ['time', 'timeline', 'kitne din', 'duration', 'how long', 'delivery', 'kab tak', 'समय', 'مدة', 'وقت', 'متى'],
+            replies: {
+                en: 'Typical timelines:\n• Small: 2–4 weeks\n• Medium: 2–4 months\n• Enterprise: 6–12 months\n\nExact estimate after scope is clear.',
+                hi: 'आमतौर पर:\n• छोटा: 2–4 हफ़्ते\n• मध्यम: 2–4 महीने\n• एंटरप्राइज़: 6–12 महीने\n\nस्कोप साफ़ होने पर सटीक अनुमान।',
+                ar: 'الجداول المعتادة:\n• صغير: 2–4 أسابيع\n• متوسط: 2–4 أشهر\n• مؤسسي: 6–12 شهرًا\n\nالتقدير الدقيق بعد وضوح النطاق.'
+            }
         },
         {
-            keys: ['contact', 'email', 'phone', 'whatsapp', 'call', 'number', 'reach', 'baat'],
-            reply: 'Contact FZK:\n• WhatsApp / Call: <a href="' + PHONE + '">+91-7728855804</a>\n• Email: fahdzaafarkhanglobaltechnology@gmail.com\n• Form: <a href="' + CONTACT + '">Get In Touch</a>\n• Instant chat: <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>'
+            id: 'contact',
+            keys: ['contact', 'email', 'phone', 'whatsapp', 'call', 'number', 'reach', 'baat', 'संपर्क', 'تواصل', 'هاتف', 'ايميل', 'بريد'],
+            replies: {
+                en: 'Contact FZK:\n• WhatsApp / Call: <a href="' + PHONE + '">+91-7728855804</a>\n• Email: fahdzaafarkhanglobaltechnology@gmail.com\n• Form: <a href="' + CONTACT + '">Get In Touch</a>\n• Chat: <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>',
+                hi: 'FZK से संपर्क:\n• WhatsApp / Call: <a href="' + PHONE + '">+91-7728855804</a>\n• Email: fahdzaafarkhanglobaltechnology@gmail.com\n• फ़ॉर्म: <a href="' + CONTACT + '">Get In Touch</a>\n• चैट: <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>',
+                ar: 'تواصل مع FZK:\n• واتساب / اتصال: <a href="' + PHONE + '">+91-7728855804</a>\n• البريد: fahdzaafarkhanglobaltechnology@gmail.com\n• النموذج: <a href="' + CONTACT + '">تواصل معنا</a>\n• دردشة: <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>'
+            }
         },
         {
-            keys: ['free call', 'consultation', 'book', 'meeting', 'schedule', 'demo call'],
-            reply: 'Free 30-minute discovery call — no pressure.\n\n<a href="' + CONTACT + '">Book via contact form</a> ya seedha <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a> karo: +91-7728855804'
+            id: 'call',
+            keys: ['free call', 'consultation', 'book', 'meeting', 'schedule', 'demo call', 'कॉल', 'सलाह', 'استشارة', 'مكالمة'],
+            replies: {
+                en: 'Free 30-minute discovery call — no pressure.\n\n<a href="' + CONTACT + '">Book via contact form</a> or <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>: +91-7728855804',
+                hi: 'फ्री 30 मिनट की discovery call — कोई दबाव नहीं।\n\n<a href="' + CONTACT + '">फ़ॉर्म से बुक करें</a> या <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>: +91-7728855804',
+                ar: 'مكالمة اكتشاف مجانية لمدة 30 دقيقة — بلا ضغط.\n\n<a href="' + CONTACT + '">احجز عبر النموذج</a> أو <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>: +91-7728855804'
+            }
         },
         {
-            keys: ['nda', 'security', 'confidential', 'ip '],
-            reply: 'Haan — NDA sign karte hain. IP aapki rehti hai. Enterprise engagements ke liye ye standard practice hai.'
+            id: 'nda',
+            keys: ['nda', 'security', 'confidential', 'سرية', 'اتفاقية'],
+            replies: {
+                en: 'Yes — we sign NDAs. Your IP stays yours. Standard for enterprise engagements.',
+                hi: 'हाँ — हम NDA साइन करते हैं। IP आपकी रहती है। एंटरप्राइज़ काम के लिए यह सामान्य है।',
+                ar: 'نعم — نوقّع اتفاقيات عدم الإفصاح. ملكيتك الفكرية تبقى لك. هذا معتاد للمشاريع المؤسسية.'
+            }
         },
         {
-            keys: ['support', 'maintain', 'bug', 'after launch'],
-            reply: 'Post-launch support milta hai: bug fixes, updates, performance optimization. Plans mein support window included hai (1–12 months).'
+            id: 'support',
+            keys: ['support', 'maintain', 'bug', 'after launch', 'सपोर्ट', 'دعم', 'صيانة'],
+            replies: {
+                en: 'Post-launch support includes bug fixes, updates, and performance optimization. Plans include 1–12 months support.',
+                hi: 'लॉन्च के बाद सपोर्ट: bug fixes, updates, performance। प्लान में 1–12 महीने सपोर्ट शामिल।',
+                ar: 'الدعم بعد الإطلاق يشمل إصلاح الأخطاء والتحديثات وتحسين الأداء. الخطط تشمل دعمًا من 1–12 شهرًا.'
+            }
         },
         {
-            keys: ['who', 'founder', 'fahd', 'company', 'about', 'fzk'],
-            reply: 'Fahd Zaafar Khan Global Technologies (FZK) — AI Engineer Solutions, Java Full Stack, Spring Boot APIs aur Cloud.\n\nFounder: Fahd Zaafar Khan · 10+ years experience.\n<a href="#about">About us</a>'
+            id: 'about',
+            keys: ['who', 'founder', 'fahd', 'company', 'about', 'fzk', 'कंपनी', 'عن', 'مؤسس'],
+            replies: {
+                en: 'Fahd Zaafar Khan Global Technologies (FZK) — AI Engineer Solutions, Java Full Stack, Spring Boot APIs, and Cloud.\n\nFounder: Fahd Zaafar Khan · 10+ years experience.\n<a href="#about">About us</a>',
+                hi: 'Fahd Zaafar Khan Global Technologies (FZK) — AI Engineer, Java Full Stack, Spring Boot APIs और Cloud.\n\nसंस्थापक: Fahd Zaafar Khan · 10+ वर्ष अनुभव।\n<a href="#about">About us</a>',
+                ar: 'Fahd Zaafar Khan Global Technologies (FZK) — حلول AI و Java Full Stack و Spring Boot والسحابة.\n\nالمؤسس: Fahd Zaafar Khan · أكثر من 10 سنوات خبرة.\n<a href="#about">من نحن</a>'
+            }
         },
         {
-            keys: ['human', 'agent', 'real person', 'team', 'insaan'],
-            reply: 'Team se baat: <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a> ya call <a href="' + PHONE + '">+91-7728855804</a> — usually fast reply.'
+            id: 'human',
+            keys: ['human', 'agent', 'real person', 'team', 'insaan', 'انسان', 'فريق', 'شخص'],
+            replies: {
+                en: 'Talk to the team: <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a> or call <a href="' + PHONE + '">+91-7728855804</a> — usually a fast reply.',
+                hi: 'टीम से बात: <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a> या कॉल <a href="' + PHONE + '">+91-7728855804</a> — जल्दी जवाब मिलता है।',
+                ar: 'تحدث مع الفريق: <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a> أو اتصل <a href="' + PHONE + '">+91-7728855804</a> — الرد عادة سريع.'
+            }
         },
         {
-            keys: ['thanks', 'thank you', 'shukriya', 'dhanyavad', 'okay', 'cool', 'great'],
-            reply: 'Welcome! Aur kuch chahiye to pooch lo — ya <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a> pe project details bhej do.'
+            id: 'thanks',
+            keys: ['thanks', 'thank you', 'shukriya', 'dhanyavad', 'okay', 'cool', 'great', 'धन्यवाद', 'शुक्रिया', 'شكرا', 'شكرًا'],
+            replies: {
+                en: 'You are welcome! Ask anything else — or send project details on <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>.',
+                hi: 'आपका स्वागत है! और कुछ पूछें — या प्रोजेक्ट डिटेल <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a> पर भेजें।',
+                ar: 'على الرحب والسعة! اسأل أي شيء آخر — أو أرسل تفاصيل المشروع عبر <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>.'
+            }
         }
     ];
 
-    const fallback = 'Samajh gaya — iske liye exact answer team degi.\n\nShort mein: AI / Full Stack / Spring Boot / AWS projects handle karte hain.\n\nTry chips below, ya <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a> / <a href="' + CONTACT + '">Get Free Quote</a>.';
+    const fallback = {
+        en: 'Got it — our team can give the exact answer.\n\nIn short: we handle AI / Full Stack / Spring Boot / AWS projects.\n\nTry the chips below, or <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a> / <a href="' + CONTACT + '">Get Free Quote</a>.',
+        hi: 'समझ गया — सटीक जवाब टीम देगी।\n\nसंक्षेप में: AI / Full Stack / Spring Boot / AWS प्रोजेक्ट्स हैंडल करते हैं।\n\nनीचे चिप्स आज़माएँ, या <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a> / <a href="' + CONTACT + '">Get Free Quote</a>.',
+        ar: 'حسنًا — الفريق يعطي الجواب الدقيق.\n\nباختصار: ننفّذ مشاريع AI و Full Stack و Spring Boot و AWS.\n\nجرّب الخيارات بالأسفل، أو <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a> / <a href="' + CONTACT + '">عرض مجاني</a>.'
+    };
+
+    function detectLang(text) {
+        if (/[\u0600-\u06FF]/.test(text)) return 'ar';
+        if (/[\u0900-\u097F]/.test(text)) return 'hi';
+        const t = text.toLowerCase();
+        if (/\b(kya|hai|haan|nahi|kitna|kaise|namaste|shukriya|dhanyavad|mujhe|chahiye)\b/.test(t)) return 'hi';
+        if (/\b(مرحبا|السلام|شكرا|أريد|كم|ما هو)\b/.test(text)) return 'ar';
+        if (/\b(hello|hi|what|how|price|cost|service|please|thanks)\b/.test(t)) return 'en';
+        return lang;
+    }
+
+    function applyLang(next, opts = {}) {
+        lang = next;
+        localStorage.setItem(LANG_KEY, lang);
+        const meta = ui[lang];
+        panel.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+        panel.setAttribute('lang', lang === 'hi' ? 'hi' : lang);
+        if (statusText) statusText.textContent = meta.status;
+        if (input) input.placeholder = meta.placeholder;
+        langGroup?.querySelectorAll('.ai-lang-btn').forEach((btn) => {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+        renderChips();
+        if (opts.announce !== false) {
+            messages.innerHTML = '';
+            appendMsg(meta.welcome, 'bot');
+        }
+    }
+
+    function renderChips() {
+        chipsEl.innerHTML = '';
+        ui[lang].chips.forEach((chip) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'ai-chip';
+            btn.textContent = chip.label;
+            btn.dataset.intent = chip.id;
+            btn.addEventListener('click', () => {
+                if (!panel.classList.contains('open')) openPanel();
+                send(chip.label, chip.id);
+            });
+            chipsEl.appendChild(btn);
+        });
+    }
 
     function openPanel() {
         panel.classList.add('open');
@@ -1060,8 +1226,13 @@ function initAiAssistant() {
     function appendMsg(text, role) {
         const el = document.createElement('div');
         el.className = 'ai-msg ' + role;
-        if (role === 'bot') el.innerHTML = text;
-        else el.textContent = text;
+        if (role === 'bot') {
+            el.innerHTML = text;
+            if (lang === 'ar') el.setAttribute('dir', 'rtl');
+        } else {
+            el.textContent = text;
+            if (/[\u0600-\u06FF]/.test(text)) el.setAttribute('dir', 'rtl');
+        }
         messages.appendChild(el);
         messages.scrollTop = messages.scrollHeight;
         return el;
@@ -1083,63 +1254,62 @@ function initAiAssistant() {
     function keyMatches(q, key) {
         const k = key.trim().toLowerCase();
         if (!k) return false;
-        if (k.length <= 3) {
+        if (k.length <= 3 && !/[\u0600-\u06FF\u0900-\u097F]/.test(k)) {
             return new RegExp('(?:^|\\s|[?.!,])' + k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?:$|\\s|[?.!,])').test(q);
         }
         return q.includes(k);
     }
 
-    function getReply(raw) {
+    function findIntent(raw, forcedId) {
+        if (forcedId) return intents.find((i) => i.id === forcedId) || null;
         const q = raw.toLowerCase().trim();
         let best = null;
         let bestScore = 0;
         for (const intent of intents) {
             let score = 0;
             for (const key of intent.keys) {
-                if (keyMatches(q, key)) score += key.trim().length;
+                if (keyMatches(q, key) || raw.includes(key)) score += key.trim().length;
             }
             if (score > bestScore) {
                 bestScore = score;
                 best = intent;
             }
         }
-        return bestScore > 0 ? best.reply : fallback;
+        return bestScore > 0 ? best : null;
     }
 
-    function botReply(text) {
+    function getReply(raw, forcedId) {
+        const detected = detectLang(raw);
+        if (detected !== lang) applyLang(detected, { announce: false });
+        const intent = findIntent(raw, forcedId);
+        if (!intent) return fallback[lang];
+        return intent.replies[lang] || intent.replies.en;
+    }
+
+    function botReply(text, forcedId) {
         showTyping();
         const delay = 450 + Math.min(900, text.length * 8);
         setTimeout(() => {
             hideTyping();
-            appendMsg(getReply(text), 'bot');
+            appendMsg(getReply(text, forcedId), 'bot');
         }, delay);
     }
 
-    function send(text) {
+    function send(text, forcedId) {
         const msg = (text || '').trim();
         if (!msg) return;
         appendMsg(msg, 'user');
         if (input) input.value = '';
-        botReply(msg);
+        botReply(msg, forcedId);
     }
 
-    chipsEl.innerHTML = '';
-    chips.forEach((label) => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'ai-chip';
-        btn.textContent = label;
-        btn.addEventListener('click', () => {
-            if (!panel.classList.contains('open')) openPanel();
-            send(label);
-        });
-        chipsEl.appendChild(btn);
+    langGroup?.addEventListener('click', (e) => {
+        const btn = e.target.closest('.ai-lang-btn');
+        if (!btn || !btn.dataset.lang) return;
+        applyLang(btn.dataset.lang);
     });
 
-    appendMsg(
-        'Namaste! Main <strong>FZK AI Assistant</strong> hoon.\n\nAI Engineer, Java Full Stack, pricing, timeline — kuch bhi poochho. Quick options neeche hain.',
-        'bot'
-    );
+    applyLang(lang, { announce: true });
 
     toggle.addEventListener('click', () => {
         if (panel.classList.contains('open')) closePanel();

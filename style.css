@@ -3779,6 +3779,44 @@ body.has-sticky-cta .ai-assistant {
     box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.25);
 }
 
+.ai-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.ai-lang {
+    display: flex;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 2px;
+    gap: 2px;
+}
+
+.ai-lang-btn {
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 5px 7px;
+    border-radius: 6px;
+    cursor: pointer;
+    line-height: 1;
+    font-family: inherit;
+}
+
+.ai-lang-btn.active {
+    background: var(--accent);
+    color: #0a1f2e;
+}
+
+.ai-lang-btn:hover:not(.active) {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
 .ai-close {
     background: rgba(255, 255, 255, 0.12);
     border: none;
@@ -3793,6 +3831,28 @@ body.has-sticky-cta .ai-assistant {
 
 .ai-close:hover {
     background: rgba(255, 255, 255, 0.22);
+}
+
+.ai-panel[dir="rtl"] .ai-msg.bot {
+    align-self: flex-end;
+    border-radius: 14px;
+    border-bottom-right-radius: 4px;
+}
+
+.ai-panel[dir="rtl"] .ai-msg.user {
+    align-self: flex-start;
+    border-radius: 14px;
+    border-bottom-left-radius: 4px;
+}
+
+.ai-panel[dir="rtl"] .ai-header-info,
+.ai-panel[dir="rtl"] .ai-status {
+    text-align: right;
+}
+
+.ai-msg[dir="rtl"] {
+    text-align: right;
+    font-family: 'DM Sans', 'Segoe UI', Tahoma, sans-serif;
 }
 
 .ai-messages {

@@ -24,7 +24,7 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f4c81">
     <link rel="canonical" href="https://fzkglobaltech.com/">
-    <link rel="stylesheet" href="style.css?v=9">
+    <link rel="stylesheet" href="style.css?v=11">
     <link rel="dns-prefetch" href="https://formsubmit.co">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1434,16 +1434,23 @@
                 <div class="ai-header-info">
                     <span class="ai-avatar" aria-hidden="true"><i class="fas fa-robot"></i></span>
                     <div>
-                        <strong>FZK AI Assistant</strong>
-                        <span class="ai-status"><span class="ai-dot"></span> Online · replies instantly</span>
+                        <strong id="aiTitle">FZK AI Assistant</strong>
+                        <span class="ai-status"><span class="ai-dot"></span> <span id="aiStatusText">Online · EN / हिं / ع</span></span>
                     </div>
                 </div>
-                <button type="button" class="ai-close" id="aiClose" aria-label="Close chat">&times;</button>
+                <div class="ai-header-actions">
+                    <div class="ai-lang" id="aiLang" role="group" aria-label="Language">
+                        <button type="button" class="ai-lang-btn active" data-lang="en" title="English">EN</button>
+                        <button type="button" class="ai-lang-btn" data-lang="hi" title="हिन्दी">हिं</button>
+                        <button type="button" class="ai-lang-btn" data-lang="ar" title="العربية">ع</button>
+                    </div>
+                    <button type="button" class="ai-close" id="aiClose" aria-label="Close chat">&times;</button>
+                </div>
             </div>
             <div class="ai-messages" id="aiMessages" aria-live="polite"></div>
             <div class="ai-chips" id="aiChips"></div>
             <form class="ai-input-row" id="aiForm" autocomplete="off">
-                <input type="text" id="aiInput" placeholder="Ask about AI, pricing, services…" maxlength="400" aria-label="Type your message">
+                <input type="text" id="aiInput" placeholder="Ask in English / हिंदी / العربية…" maxlength="400" aria-label="Type your message">
                 <button type="submit" class="ai-send" aria-label="Send message"><i class="fas fa-paper-plane"></i></button>
             </form>
         </div>
@@ -1550,7 +1557,7 @@
         </div>
     </footer>
 
-    <script src="script.js?v=9"></script>
+    <script src="script.js?v=11"></script>
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').catch(() => {});
