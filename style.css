@@ -8,15 +8,17 @@
     --primary-light: #1a6bb3;
     --accent: #00d4aa;
     --accent-hover: #00b894;
-    --dark: #0f172a;
-    --dark-light: #1e293b;
-    --gray: #64748b;
-    --gray-light: #94a3b8;
+    --dark: #0a0a0a;
+    --dark-light: #141414;
+    --gray: #3f3f46;
+    --gray-light: #71717a;
     --white: #ffffff;
-    --bg-light: #f8fafc;
+    --bg-light: #f4f4f5;
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --font-body: 'Outfit', sans-serif;
+    --font-display: 'Sora', sans-serif;
 }
 
 /* Dark Mode Variables */
@@ -92,8 +94,14 @@ body.dark-mode .integration-item {
 
 body.dark-mode .why-us-card h3,
 body.dark-mode .integration-item span,
-body.dark-mode .award-item span {
+body.dark-mode .award-item span,
+body.dark-mode .guarantee-card h3 {
     color: var(--white);
+}
+
+body.dark-mode .guarantee-card {
+    background: var(--dark-light);
+    border-color: rgba(255,255,255,0.1);
 }
 
 body.dark-mode .award-item {
@@ -131,10 +139,49 @@ html {
 }
 
 body {
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-body);
     color: var(--dark);
-    line-height: 1.6;
+    line-height: 1.65;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4,
+.section-title,
+.hero-title,
+.logo-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.section-title,
+.about-text,
+.guarantee-card h3,
+.service-card h3,
+.why-us-card h3,
+.pricing-card h3,
+.blog-card h3 {
+    color: #000000;
+}
+
+.nav-link {
+    font-family: var(--font-display);
+    font-weight: 600;
+}
+
+.hero-title {
+    color: var(--white);
+    font-weight: 800;
+}
+
+body.dark-mode .section-title,
+body.dark-mode .guarantee-card h3,
+body.dark-mode .service-card h3,
+body.dark-mode .why-us-card h3,
+body.dark-mode .pricing-card h3,
+body.dark-mode .blog-card h3 {
+    color: #fafafa;
 }
 
 .container {
@@ -3157,77 +3204,86 @@ select:focus-visible {
     font-weight: 800;
 }
 
-/* Lead Magnet */
-.lead-magnet {
-    position: fixed;
-    bottom: 24px;
-    left: 24px;
-    z-index: 9996;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(20px);
+/* Guarantees */
+.guarantees-section {
+    background: var(--white);
+}
+
+.guarantees-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+}
+
+.guarantee-card {
+    padding: 28px 24px;
+    border: 1px solid #e4e4e7;
+    border-radius: 12px;
     transition: var(--transition);
 }
 
-.lead-magnet.visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+.guarantee-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-3px);
 }
 
-.lead-magnet-content {
-    background: var(--white);
-    padding: 24px;
-    border-radius: 16px;
-    box-shadow: var(--shadow-lg);
-    max-width: 320px;
-    position: relative;
+.guarantee-card i {
+    font-size: 1.6rem;
+    color: var(--primary);
+    margin-bottom: 14px;
 }
 
-.lead-close {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    border: none;
-    background: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--gray);
-}
-
-.lead-magnet-content h3 {
+.guarantee-card h3 {
     font-size: 1.1rem;
-    margin-bottom: 12px;
-    color: var(--dark);
+    color: #000000;
+    margin-bottom: 8px;
 }
 
-.lead-magnet-content p {
-    font-size: 0.9rem;
+.guarantee-card p {
     color: var(--gray);
-    margin-bottom: 16px;
+    font-size: 0.95rem;
+    line-height: 1.55;
 }
 
-.lead-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+/* Tech search */
+.tech-search-wrap {
+    position: relative;
+    max-width: 420px;
+    margin: 0 auto 28px;
 }
 
-.lead-form input {
-    padding: 12px 16px;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
+.tech-search-wrap i {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-light);
 }
 
-.lead-note {
-    font-size: 0.8rem;
+.tech-search-wrap input {
+    width: 100%;
+    padding: 14px 16px 14px 44px;
+    border: 2px solid #e4e4e7;
+    border-radius: 12px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: #0a0a0a;
+    background: var(--white);
+}
+
+.tech-search-wrap input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.tech-no-results {
+    text-align: center;
     color: var(--gray);
-    margin-top: 12px;
+    margin-top: 16px;
 }
 
-.lead-note i {
-    margin-right: 6px;
-    color: var(--accent);
+.tech-item.is-hidden {
+    display: none;
 }
 
 /* Share Float */
@@ -3382,14 +3438,6 @@ select:focus-visible {
         display: none;
     }
 
-    .lead-magnet {
-        left: 16px;
-        right: 16px;
-        bottom: 16px;
-    }
-    .lead-magnet-content {
-        max-width: none;
-    }
     .chat-widget {
         bottom: 90px;
         right: 16px;

@@ -29,7 +29,7 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Analytics: Replace G-XXXXXXXXXX with your GA4 ID. Remove these 2 lines if not using GA. -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -260,6 +260,39 @@
                 <div class="as-seen-item" title="G2"><i class="fas fa-star"></i><span>G2</span></div>
                 <div class="as-seen-item" title="AWS"><i class="fab fa-aws"></i><span>AWS</span></div>
                 <div class="as-seen-item" title="Google"><i class="fab fa-google"></i><span>Google</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guarantees -->
+    <section class="section guarantees-section" id="guarantees">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Our Promise</span>
+                <h2 class="section-title">Built-in Guarantees</h2>
+                <p class="section-subtitle">Clear commitments so you can start with confidence</p>
+            </div>
+            <div class="guarantees-grid">
+                <div class="guarantee-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>On-Time Delivery</h3>
+                    <p>Milestone dates agreed upfront. We ship on schedule or we tell you early.</p>
+                </div>
+                <div class="guarantee-card">
+                    <i class="fas fa-comments"></i>
+                    <h3>Free Consultation</h3>
+                    <p>30-minute discovery call with no pressure and no obligation to hire.</p>
+                </div>
+                <div class="guarantee-card">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>NDA Ready</h3>
+                    <p>Your IP stays yours. We sign NDAs before sharing sensitive details.</p>
+                </div>
+                <div class="guarantee-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>Post-Launch Support</h3>
+                    <p>Bug fixes and guidance included for the support window in your plan.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -587,44 +620,67 @@
                 <h2 class="section-title">Our Tech Stack</h2>
                 <p class="section-subtitle">Cutting-edge technologies powering our solutions</p>
             </div>
-            <div class="tech-grid">
-                <div class="tech-item">
+            <div class="tech-search-wrap">
+                <i class="fas fa-search"></i>
+                <input type="search" id="techSearch" placeholder="Search tech (e.g. Java, AWS, React)..." aria-label="Search technologies">
+            </div>
+            <div class="tech-grid" id="techGrid">
+                <div class="tech-item" data-tech="java">
                     <div class="tech-logo">
                         <i class="fab fa-java"></i>
                     </div>
                     <span>Java</span>
                 </div>
-                <div class="tech-item">
+                <div class="tech-item" data-tech="spring boot">
                     <div class="tech-logo">
                         <i class="fas fa-leaf"></i>
                     </div>
                     <span>Spring Boot</span>
                 </div>
-                <div class="tech-item">
+                <div class="tech-item" data-tech="react">
                     <div class="tech-logo">
                         <i class="fab fa-react"></i>
                     </div>
                     <span>React</span>
                 </div>
-                <div class="tech-item">
+                <div class="tech-item" data-tech="angular">
                     <div class="tech-logo">
                         <i class="fab fa-angular"></i>
                     </div>
                     <span>Angular</span>
                 </div>
-                <div class="tech-item">
+                <div class="tech-item" data-tech="mysql">
                     <div class="tech-logo">
                         <i class="fas fa-database"></i>
                     </div>
                     <span>MySQL</span>
                 </div>
-                <div class="tech-item">
+                <div class="tech-item" data-tech="aws">
                     <div class="tech-logo">
                         <i class="fab fa-aws"></i>
                     </div>
                     <span>AWS</span>
                 </div>
+                <div class="tech-item" data-tech="kafka">
+                    <div class="tech-logo">
+                        <i class="fas fa-stream"></i>
+                    </div>
+                    <span>Kafka</span>
+                </div>
+                <div class="tech-item" data-tech="docker">
+                    <div class="tech-logo">
+                        <i class="fab fa-docker"></i>
+                    </div>
+                    <span>Docker</span>
+                </div>
+                <div class="tech-item" data-tech="postgresql">
+                    <div class="tech-logo">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <span>PostgreSQL</span>
+                </div>
             </div>
+            <p class="tech-no-results" id="techNoResults" hidden>No matching technology. Try another keyword.</p>
         </div>
     </section>
 
@@ -1189,20 +1245,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Lead Magnet -->
-    <div class="lead-magnet" id="leadMagnet">
-        <div class="lead-magnet-content">
-            <button class="lead-close" id="leadClose">&times;</button>
-            <h3>Free Guide: Building Scalable APIs</h3>
-            <p>Get our PDF guide on best practices for Spring Boot & REST APIs. Enter email to download.</p>
-            <form class="lead-form" id="leadForm">
-                <input type="email" placeholder="Your email" required>
-                <button type="submit" class="btn btn-primary">Download PDF</button>
-            </form>
-            <p class="lead-note"><i class="fas fa-file-pdf"></i> No spam. Unsubscribe anytime.</p>
-        </div>
-    </div>
 
     <!-- Live Chat Widget -->
     <div class="chat-widget" id="chatWidget">

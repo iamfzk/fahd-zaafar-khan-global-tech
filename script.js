@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initFooterForm();
     initExitPopup();
     initCalculator();
-    initLeadMagnet();
+    initTechSearch();
     initChatWidget();
     initKeyboardShortcuts();
     initROICalculator();
@@ -206,7 +206,7 @@ function initActiveNavLink() {
  */
 function initScrollReveal() {
     const revealElements = document.querySelectorAll(
-        '.section-header, .service-card, .tech-item, .project-card, .about-content, .skill-item, .faq-item, .team-card, .cert-badge, .client-logo, .testimonials-slider, .process-step, .pricing-card, .timeline-item, .map-wrapper, .compare-table-wrap, .as-seen-logos, .industry-tags, .blog-card'
+        '.section-header, .service-card, .tech-item, .project-card, .about-content, .skill-item, .faq-item, .team-card, .cert-badge, .client-logo, .testimonials-slider, .process-step, .pricing-card, .timeline-item, .map-wrapper, .compare-table-wrap, .as-seen-logos, .industry-tags, .blog-card, .guarantee-card'
     );
 
     const revealOptions = {
@@ -707,25 +707,24 @@ function initCalculator() {
 }
 
 /**
- * Lead magnet popup
+ * Tech stack search filter
  */
-function initLeadMagnet() {
-    const magnet = document.getElementById('leadMagnet');
-    const closeBtn = document.getElementById('leadClose');
-    const form = document.getElementById('leadForm');
-    if (localStorage.getItem('leadShown')) return;
+function initTechSearch() {
+    const input = document.getElementById('techSearch');
+    const items = document.querySelectorAll('.tech-item');
+    const noResults = document.getElementById('techNoResults');
+    if (!input || !items.length) return;
 
-    setTimeout(() => magnet?.classList.add('visible'), 15000);
-    closeBtn?.addEventListener('click', () => {
-        magnet?.classList.remove('visible');
-        localStorage.setItem('leadShown', 'true');
-    });
-    form?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        showNotification('Thank you! Opening your guide...', 'success');
-        magnet?.classList.remove('visible');
-        localStorage.setItem('leadShown', 'true');
-        window.open('assets/brochure.html', '_blank', 'noopener');
+    input.addEventListener('input', () => {
+        const q = input.value.trim().toLowerCase();
+        let visible = 0;
+        items.forEach(item => {
+            const label = (item.getAttribute('data-tech') || item.textContent || '').toLowerCase();
+            const show = !q || label.includes(q);
+            item.classList.toggle('is-hidden', !show);
+            if (show) visible++;
+        });
+        if (noResults) noResults.hidden = visible > 0;
     });
 }
 
