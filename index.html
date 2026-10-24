@@ -24,7 +24,7 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#c41e3a">
     <link rel="canonical" href="https://fzkglobaltech.com/">
-    <link rel="stylesheet" href="style.css?v=15">
+    <link rel="stylesheet" href="style.css?v=16">
     <link rel="dns-prefetch" href="https://formsubmit.co">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -163,11 +163,37 @@
                         <button data-lang="ur">اردو</button>
                     </div>
                 </li>
-                <li>
-                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-                        <i class="fas fa-moon"></i>
-                        <i class="fas fa-sun" style="display:none"></i>
+                <li class="theme-picker-wrap">
+                    <button class="theme-toggle" id="themeToggle" aria-label="Choose theme" aria-expanded="false" aria-haspopup="true" title="Themes">
+                        <i class="fas fa-palette"></i>
                     </button>
+                    <div class="theme-panel" id="themePanel" role="menu" aria-label="Site themes" hidden>
+                        <div class="theme-panel-head">Themes</div>
+                        <button type="button" class="theme-option" role="menuitemradio" data-theme="crimson" aria-checked="true">
+                            <span class="theme-swatch" style="--swatch:#c41e3a"></span>
+                            <span class="theme-option-text"><strong>Crimson</strong><small>Brand red</small></span>
+                        </button>
+                        <button type="button" class="theme-option" role="menuitemradio" data-theme="dark" aria-checked="false">
+                            <span class="theme-swatch" style="--swatch:#0f172a; box-shadow: inset 0 0 0 2px #fb7185"></span>
+                            <span class="theme-option-text"><strong>Dark</strong><small>Night mode</small></span>
+                        </button>
+                        <button type="button" class="theme-option" role="menuitemradio" data-theme="ocean" aria-checked="false">
+                            <span class="theme-swatch" style="--swatch:#0f4c81"></span>
+                            <span class="theme-option-text"><strong>Ocean</strong><small>Classic blue</small></span>
+                        </button>
+                        <button type="button" class="theme-option" role="menuitemradio" data-theme="forest" aria-checked="false">
+                            <span class="theme-swatch" style="--swatch:#047857"></span>
+                            <span class="theme-option-text"><strong>Forest</strong><small>Growth green</small></span>
+                        </button>
+                        <button type="button" class="theme-option" role="menuitemradio" data-theme="amber" aria-checked="false">
+                            <span class="theme-swatch" style="--swatch:#d97706"></span>
+                            <span class="theme-option-text"><strong>Amber</strong><small>Warm gold</small></span>
+                        </button>
+                        <button type="button" class="theme-option" role="menuitemradio" data-theme="slate" aria-checked="false">
+                            <span class="theme-swatch" style="--swatch:#475569"></span>
+                            <span class="theme-option-text"><strong>Slate</strong><small>Pro grey</small></span>
+                        </button>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -1565,7 +1591,7 @@
         </div>
     </footer>
 
-    <script src="script.js?v=15"></script>
+    <script src="script.js?v=16"></script>
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').catch(() => {});

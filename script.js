@@ -531,23 +531,80 @@ function initTypingAnimation() {
  */
 function initThemeToggle() {
     const toggle = document.getElementById('themeToggle');
+    const panel = document.getElementById('themePanel');
+    const wrap = document.querySelector('.theme-picker-wrap');
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
     const body = document.body;
-    const moonIcon = toggle?.querySelector('.fa-moon');
-    const sunIcon = toggle?.querySelector('.fa-sun');
+    const root = document.documentElement;
 
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    if (savedTheme === 'dark') {
-        body.classList.add('dark-mode');
-        if (moonIcon) moonIcon.style.display = 'none';
-        if (sunIcon) sunIcon.style.display = 'inline-block';
+    const THEMES = {
+        crimson: { dark: false, color: '#c41e3a' },
+        dark: { dark: true, color: '#0f172a' },
+        ocean: { dark: false, color: '#0f4c81' },
+        forest: { dark: false, color: '#047857' },
+        amber: { dark: false, color: '#d97706' },
+        slate: { dark: false, color: '#475569' }
+    };
+
+    function migrateSaved() {
+        const legacy = localStorage.getItem('theme');
+        let saved = localStorage.getItem('fzk_site_theme');
+        if (!saved && legacy === 'dark') saved = 'dark';
+        if (!saved && legacy === 'light') saved = 'crimson';
+        if (!saved || !THEMES[saved]) saved = 'crimson';
+        return saved;
     }
 
-    toggle?.addEventListener('click', () => {
-        body.classList.toggle('dark-mode');
-        const isDark = body.classList.contains('dark-mode');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        if (moonIcon) moonIcon.style.display = isDark ? 'none' : 'inline-block';
-        if (sunIcon) sunIcon.style.display = isDark ? 'inline-block' : 'none';
+    function applyTheme(id) {
+        if (!THEMES[id]) id = 'crimson';
+        const cfg = THEMES[id];
+        root.setAttribute('data-theme', id);
+        body.classList.toggle('dark-mode', cfg.dark);
+        localStorage.setItem('fzk_site_theme', id);
+        localStorage.setItem('theme', cfg.dark ? 'dark' : 'light');
+        if (metaTheme) metaTheme.setAttribute('content', cfg.color);
+        panel?.querySelectorAll('.theme-option').forEach((btn) => {
+            const on = btn.dataset.theme === id;
+            btn.setAttribute('aria-checked', on ? 'true' : 'false');
+            btn.classList.toggle('active', on);
+        });
+    }
+
+    function openPanel() {
+        if (!panel) return;
+        panel.hidden = false;
+        panel.classList.add('open');
+        toggle?.setAttribute('aria-expanded', 'true');
+    }
+
+    function closePanel() {
+        if (!panel) return;
+        panel.classList.remove('open');
+        panel.hidden = true;
+        toggle?.setAttribute('aria-expanded', 'false');
+    }
+
+    applyTheme(migrateSaved());
+
+    toggle?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (panel?.classList.contains('open')) closePanel();
+        else openPanel();
+    });
+
+    panel?.addEventListener('click', (e) => {
+        const opt = e.target.closest('.theme-option');
+        if (!opt?.dataset.theme) return;
+        applyTheme(opt.dataset.theme);
+        closePanel();
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!wrap?.contains(e.target)) closePanel();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closePanel();
     });
 }
 
