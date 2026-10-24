@@ -26,6 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initSkillAnimation();
     initTestimonials();
     initFAQ();
+    initFaqSearch();
+    initOnlineStatus();
     initCookieConsent();
     initNewsletter();
     initParticles();
@@ -577,6 +579,51 @@ function initFAQ() {
 }
 
 /**
+ * FAQ search filter
+ */
+function initFaqSearch() {
+    const input = document.getElementById('faqSearch');
+    const items = document.querySelectorAll('.faq-item');
+    const noResults = document.getElementById('faqNoResults');
+    if (!input || !items.length) return;
+
+    input.addEventListener('input', () => {
+        const q = input.value.trim().toLowerCase();
+        let visible = 0;
+        items.forEach(item => {
+            const text = (item.textContent || '').toLowerCase();
+            const show = !q || text.includes(q);
+            item.style.display = show ? '' : 'none';
+            if (show) visible++;
+        });
+        if (noResults) noResults.hidden = visible > 0;
+    });
+}
+
+/**
+ * Dynamic online status (Mon–Fri 9AM–6PM IST)
+ */
+function initOnlineStatus() {
+    const badge = document.getElementById('onlineStatus');
+    const text = document.getElementById('onlineStatusText');
+    if (!badge || !text) return;
+
+    const now = new Date();
+    const ist = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+    const day = ist.getDay();
+    const hour = ist.getHours();
+    const isOnline = day >= 1 && day <= 5 && hour >= 9 && hour < 18;
+
+    if (isOnline) {
+        badge.classList.remove('is-offline');
+        text.textContent = "We're online now";
+    } else {
+        badge.classList.add('is-offline');
+        text.textContent = 'Offline — reply next business day';
+    }
+}
+
+/**
  * Cookie consent
  */
 function initCookieConsent() {
@@ -599,53 +646,57 @@ function initCookieConsent() {
 }
 
 /**
- * Particle background in hero (disabled when user prefers reduced motion)
+ * Galaxy starfield in hero (disabled when user prefers reduced motion)
  */
 function initParticles() {
     const canvas = document.getElementById('heroParticles');
     if (!canvas || document.body.classList.contains('reduce-motion')) return;
 
     const ctx = canvas.getContext('2d');
-    let particles = [];
-    const particleCount = 50;
+    let stars = [];
+    const starCount = 120;
 
     function resize() {
         canvas.width = canvas.offsetWidth;
         canvas.height = canvas.offsetHeight;
     }
 
-    function createParticles() {
-        particles = [];
-        for (let i = 0; i < particleCount; i++) {
-            particles.push({
+    function createStars() {
+        stars = [];
+        for (let i = 0; i < starCount; i++) {
+            stars.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                r: Math.random() * 2 + 0.5,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5
+                r: Math.random() * 1.8 + 0.3,
+                speed: Math.random() * 0.35 + 0.05,
+                twinkle: Math.random() * Math.PI * 2,
+                twinkleSpeed: Math.random() * 0.04 + 0.01
             });
         }
     }
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-            p.x += p.vx;
-            p.y += p.vy;
-            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        stars.forEach(s => {
+            s.y += s.speed;
+            s.twinkle += s.twinkleSpeed;
+            if (s.y > canvas.height) {
+                s.y = 0;
+                s.x = Math.random() * canvas.width;
+            }
+            const alpha = 0.35 + Math.abs(Math.sin(s.twinkle)) * 0.55;
             ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(255,255,255,0.15)';
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255,255,255,${alpha})`;
             ctx.fill();
         });
         requestAnimationFrame(animate);
     }
 
     resize();
-    createParticles();
+    createStars();
     animate();
-    window.addEventListener('resize', () => { resize(); createParticles(); });
+    window.addEventListener('resize', () => { resize(); createStars(); });
 }
 
 /**

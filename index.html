@@ -29,7 +29,7 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Analytics: Replace G-XXXXXXXXXX with your GA4 ID. Remove these 2 lines if not using GA. -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -177,7 +177,12 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="gradient-mesh"></div>
+        <div class="galaxy-bg" aria-hidden="true">
+            <div class="galaxy-nebula galaxy-nebula-1"></div>
+            <div class="galaxy-nebula galaxy-nebula-2"></div>
+            <div class="galaxy-nebula galaxy-nebula-3"></div>
+            <div class="galaxy-stars"></div>
+        </div>
         <canvas class="hero-particles" id="heroParticles"></canvas>
         <div class="hero-overlay"></div>
         <div class="hero-content">
@@ -910,6 +915,11 @@
                 <span class="section-tag">FAQ</span>
                 <h2 class="section-title">Frequently Asked Questions</h2>
             </div>
+            <div class="faq-search-wrap">
+                <i class="fas fa-search"></i>
+                <input type="search" id="faqSearch" placeholder="Search FAQ..." aria-label="Search FAQ">
+            </div>
+            <p class="faq-no-results" id="faqNoResults" hidden>No matching questions. Try another keyword.</p>
             <div class="faq-list">
                 <div class="faq-item">
                     <button class="faq-question">What technologies do you specialize in?<i class="fas fa-chevron-down"></i></button>
@@ -1073,7 +1083,7 @@
                 <h2 class="section-title">Get In Touch</h2>
                 <p class="section-subtitle">Have a project in mind? Let's discuss how we can help.</p>
                 <div class="contact-badges">
-                    <span class="status-online"><i class="fas fa-circle"></i> We're online now</span>
+                    <span class="status-online" id="onlineStatus"><i class="fas fa-circle"></i> <span id="onlineStatusText">Checking...</span></span>
                     <span class="response-badge"><i class="fas fa-bolt"></i> We respond within 2 hours</span>
                     <span class="hours-badge"><i class="fas fa-clock"></i> Mon–Fri, 9AM–6PM IST</span>
                 </div>
