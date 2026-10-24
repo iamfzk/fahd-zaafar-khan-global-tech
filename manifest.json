@@ -4,8 +4,8 @@
   "description": "Java Full Stack Development, Spring Boot APIs, Cloud Solutions and Modern Web Applications",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0f4c81",
-  "theme_color": "#0f4c81",
+  "background_color": "#c41e3a",
+  "theme_color": "#c41e3a",
   "icons": [
     {
       "src": "assets/logo.svg",

@@ -3,9 +3,9 @@
    ============================================ */
 
 :root {
-    --primary: #0f4c81;
-    --primary-dark: #0a3560;
-    --primary-light: #1a6bb3;
+    --primary: #c41e3a;
+    --primary-dark: #9f1239;
+    --primary-light: #e11d48;
     --accent: #00d4aa;
     --accent-hover: #00b894;
     --dark: #000000;
@@ -23,9 +23,9 @@
 
 /* Dark Mode Variables */
 body.dark-mode {
-    --primary: #3b82f6;
-    --primary-dark: #1e40af;
-    --primary-light: #60a5fa;
+    --primary: #fb7185;
+    --primary-dark: #e11d48;
+    --primary-light: #fda4af;
     --accent: #22d3ee;
     --accent-hover: #06b6d4;
     --dark: #f1f5f9;
@@ -396,7 +396,7 @@ body.dark-mode .blog-card h3 {
 
 .logo {
     text-decoration: none;
-    color: #c41e3a;
+    color: var(--primary);
     display: flex;
     align-items: center;
     gap: 12px;
@@ -424,7 +424,7 @@ body.dark-mode .blog-card h3 {
 .logo-name {
     font-size: 0.75rem;
     font-weight: 600;
-    color: #c41e3a;
+    color: var(--primary);
     letter-spacing: 0.5px;
 }
 
@@ -451,7 +451,7 @@ body.dark-mode .blog-card h3 {
 }
 
 .nav-menu::-webkit-scrollbar-thumb {
-    background: rgba(15, 76, 129, 0.2);
+    background: rgba(196, 30, 58, 0.2);
     border-radius: 4px;
 }
 
@@ -469,11 +469,11 @@ body.dark-mode .blog-card h3 {
 .nav-link:hover,
 .nav-link.active {
     color: var(--primary);
-    background: rgba(15, 76, 129, 0.08);
+    background: rgba(196, 30, 58, 0.08);
 }
 
 .nav-contact {
-    background: rgba(15, 76, 129, 0.1);
+    background: rgba(196, 30, 58, 0.1);
     color: var(--primary);
     font-weight: 600;
 }
@@ -509,7 +509,7 @@ body.dark-mode .blog-card h3 {
 }
 
 .theme-toggle {
-    background: rgba(15, 76, 129, 0.1);
+    background: rgba(196, 30, 58, 0.1);
     border: none;
     width: 40px;
     height: 40px;
@@ -523,7 +523,7 @@ body.dark-mode .blog-card h3 {
 }
 
 .theme-toggle:hover {
-    background: rgba(15, 76, 129, 0.2);
+    background: rgba(196, 30, 58, 0.2);
 }
 
 body.dark-mode .theme-toggle {
@@ -1099,7 +1099,7 @@ body.dark-mode .theme-toggle i.fa-sun {
     gap: 6px;
     padding: 8px 12px;
     background: transparent;
-    border: 1px solid rgba(15, 76, 129, 0.25);
+    border: 1px solid rgba(196, 30, 58, 0.25);
     border-radius: 8px;
     color: var(--dark);
     font-size: 0.9rem;
@@ -1107,8 +1107,8 @@ body.dark-mode .theme-toggle i.fa-sun {
     transition: var(--transition);
 }
 .lang-switcher:hover {
-    background: rgba(15, 76, 129, 0.06);
-    border-color: rgba(15, 76, 129, 0.4);
+    background: rgba(196, 30, 58, 0.06);
+    border-color: rgba(196, 30, 58, 0.4);
 }
 .lang-switcher i.fa-globe { margin-right: 4px; }
 .lang-switcher i.fa-chevron-down {
@@ -1158,10 +1158,10 @@ body.dark-mode .lang-dropdown button {
     color: var(--white);
 }
 .lang-dropdown button:hover {
-    background: rgba(15, 76, 129, 0.1);
+    background: rgba(196, 30, 58, 0.1);
 }
 body.dark-mode .lang-dropdown button:hover {
-    background: rgba(59, 130, 246, 0.2);
+    background: rgba(251, 113, 133, 0.2);
 }
 
 /* As Seen In */
@@ -1256,13 +1256,13 @@ body.dark-mode .compare-table th {
     color: var(--white);
 }
 .compare-table .highlight-col {
-    background: rgba(15, 76, 129, 0.08);
+    background: rgba(196, 30, 58, 0.08);
     color: var(--primary);
     font-weight: 500;
 }
 body.dark-mode .compare-table .highlight-col {
-    background: rgba(59, 130, 246, 0.15);
-    color: var(--accent);
+    background: rgba(251, 113, 133, 0.15);
+    color: var(--primary);
 }
 .compare-table .highlight-col i.fa-check {
     color: #10b981;
@@ -1404,7 +1404,7 @@ body.dark-mode .compare-table .highlight-col {
     transform: translateY(-6px);
     box-shadow: var(--shadow-lg);
     background: var(--white);
-    border: 2px solid rgba(15, 76, 129, 0.1);
+    border: 2px solid rgba(196, 30, 58, 0.1);
 }
 
 .why-us-card i {
@@ -1523,7 +1523,7 @@ body.dark-mode .compare-table .highlight-col {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(15, 76, 129, 0.1), rgba(0, 212, 170, 0.1));
+    background: linear-gradient(135deg, rgba(196, 30, 58, 0.1), rgba(0, 212, 170, 0.1));
     border-radius: 14px;
     margin-bottom: 24px;
     font-size: 1.75rem;
@@ -1974,7 +1974,7 @@ body.dark-mode .compare-table .highlight-col {
 
 .project-tags span {
     padding: 6px 14px;
-    background: rgba(15, 76, 129, 0.1);
+    background: rgba(196, 30, 58, 0.1);
     color: var(--primary);
     font-size: 0.85rem;
     font-weight: 600;
@@ -2362,8 +2362,8 @@ body.dark-mode .compare-table .highlight-col {
     inset: 0;
     background:
         radial-gradient(ellipse 70% 60% at 30% 40%, rgba(0, 212, 170, 0.35), transparent 55%),
-        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(59, 130, 246, 0.4), transparent 50%),
-        linear-gradient(145deg, #0a3560 0%, #020617 55%, #000 100%);
+        radial-gradient(ellipse 60% 50% at 80% 20%, rgba(225, 29, 72, 0.45), transparent 50%),
+        linear-gradient(145deg, #9f1239 0%, #020617 55%, #000 100%);
     animation: videoGlow 8s ease-in-out infinite alternate;
 }
 
@@ -2888,7 +2888,7 @@ body.dark-mode .compare-table .highlight-col {
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(15, 76, 129, 0.1);
+    background: rgba(196, 30, 58, 0.1);
     border: none;
     width: 36px;
     height: 36px;
@@ -2924,7 +2924,7 @@ body.dark-mode .compare-table .highlight-col {
     align-items: center;
     gap: 8px;
     padding: 10px 18px;
-    background: rgba(15, 76, 129, 0.08);
+    background: rgba(196, 30, 58, 0.08);
     border-radius: 50px;
     font-size: 0.9rem;
     font-weight: 600;
@@ -2995,7 +2995,7 @@ body.dark-mode .compare-table .highlight-col {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(15, 76, 129, 0.1);
+    background: rgba(196, 30, 58, 0.1);
     color: var(--primary);
     border-radius: 10px;
     transition: var(--transition);
@@ -3064,7 +3064,7 @@ body.dark-mode .compare-table .highlight-col {
 
 .blog-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(15, 76, 129, 0.12);
+    box-shadow: 0 12px 40px rgba(196, 30, 58, 0.12);
 }
 
 .blog-card-icon {
@@ -3657,7 +3657,7 @@ body.has-sticky-cta .ai-assistant {
     height: 56px;
     border: none;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary) 0%, #0a3560 55%, var(--accent) 160%);
+    background: linear-gradient(135deg, var(--primary) 0%, #9f1239 55%, var(--accent) 160%);
     color: #fff;
     cursor: pointer;
     display: flex;
@@ -3665,7 +3665,7 @@ body.has-sticky-cta .ai-assistant {
     align-items: center;
     justify-content: center;
     gap: 1px;
-    box-shadow: 0 6px 24px rgba(15, 76, 129, 0.45);
+    box-shadow: 0 6px 24px rgba(196, 30, 58, 0.45);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     position: relative;
 }
@@ -3719,7 +3719,7 @@ body.has-sticky-cta .ai-assistant {
     transform: translateY(12px) scale(0.96);
     transform-origin: bottom right;
     transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
-    border: 1px solid rgba(15, 76, 129, 0.12);
+    border: 1px solid rgba(196, 30, 58, 0.12);
 }
 
 .ai-panel.open {
@@ -3936,7 +3936,7 @@ body.has-sticky-cta .ai-assistant {
 }
 
 .ai-chip {
-    border: 1px solid rgba(15, 76, 129, 0.2);
+    border: 1px solid rgba(196, 30, 58, 0.2);
     background: #f8fafc;
     color: var(--primary);
     font-size: 0.75rem;
@@ -4099,7 +4099,7 @@ body.has-sticky-cta .ai-assistant {
 
 .floating-btn.call:hover {
     transform: scale(1.1);
-    box-shadow: 0 6px 25px rgba(15, 76, 129, 0.5);
+    box-shadow: 0 6px 25px rgba(196, 30, 58, 0.5);
 }
 
 /* Project Modal */
@@ -4178,7 +4178,7 @@ body.has-sticky-cta .ai-assistant {
 
 .modal-body .modal-tags span {
     padding: 6px 14px;
-    background: rgba(15, 76, 129, 0.1);
+    background: rgba(196, 30, 58, 0.1);
     color: var(--primary);
     font-size: 0.85rem;
     font-weight: 600;
@@ -4605,7 +4605,7 @@ body.has-sticky-cta .ai-assistant {
     .hero {
         min-height: auto;
         padding: 40px 0;
-        background: #0f4c81 !important;
+        background: #c41e3a !important;
     }
 
     .section {
