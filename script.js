@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCharCount();
     initFooterYear();
     initVideoPlayer();
+    initAiAssistant();
 });
 
 /**
@@ -948,23 +949,211 @@ function initKeyboardShortcuts() {
 }
 
 /**
- * Chat widget
+ * FZK AI Assistant — on-site smart chatbot (services, pricing, contact)
  */
-function initChatWidget() {
-    const toggle = document.getElementById('chatToggle');
-    const panel = document.getElementById('chatPanel');
-    const closeBtn = document.getElementById('chatClose');
-    const sendBtn = document.getElementById('chatSend');
-    const input = document.getElementById('chatInput');
+function initAiAssistant() {
+    const root = document.getElementById('aiAssistant');
+    const toggle = document.getElementById('aiToggle');
+    const panel = document.getElementById('aiPanel');
+    const closeBtn = document.getElementById('aiClose');
+    const form = document.getElementById('aiForm');
+    const input = document.getElementById('aiInput');
+    const messages = document.getElementById('aiMessages');
+    const chipsEl = document.getElementById('aiChips');
+    if (!root || !toggle || !panel || !messages) return;
 
-    toggle?.addEventListener('click', () => panel?.classList.toggle('open'));
-    closeBtn?.addEventListener('click', () => panel?.classList.remove('open'));
-    sendBtn?.addEventListener('click', () => {
-        if (input?.value.trim()) {
-            showNotification('For instant response, please WhatsApp us!', 'success');
-            input.value = '';
-            panel?.classList.remove('open');
+    const WA = 'https://wa.me/917728855804?text=' + encodeURIComponent("Hi, I'd like to discuss a project with FZK Global Technologies.");
+    const CONTACT = '#contact';
+    const PHONE = 'tel:+917728855804';
+
+    const chips = [
+        'Services',
+        'AI Engineer',
+        'Pricing',
+        'Timeline',
+        'Contact',
+        'Free call'
+    ];
+
+    const intents = [
+        {
+            keys: ['hi', 'hello', 'hey', 'namaste', 'namaskar', 'hii', 'good morning', 'good evening', 'salaam'],
+            reply: 'Namaste! 👋 Main FZK AI Assistant hoon.\n\nAI Engineer, Java Full Stack, Spring Boot, microservices, Data Science aur AWS Cloud projects mein help karta hoon.\n\nKya jaanna chahte ho — services, pricing, ya free consultation?'
+        },
+        {
+            keys: ['service', 'services', 'kya karte', 'offer', 'what do you', 'solutions', 'kaam'],
+            reply: 'Hum ye deliver karte hain:\n• AI Engineer Solutions (LangChain, ML, automation)\n• Data Scientist with AI\n• Java Full Stack & Spring Boot microservices\n• REST APIs\n• React / Angular apps\n• AWS cloud deployment\n\nDetails: <a href="#services">Services</a>'
+        },
+        {
+            keys: ['ai engineer', 'ai ', 'artificial', 'ml', 'machine learning', 'langchain', 'chatgpt', 'llm', 'genai', 'generative'],
+            reply: 'AI Engineer Solutions: custom AI/ML systems, LangChain apps, intelligent automation, aur product mein AI features.\n\nUse-cases: chatbots, document AI, fraud detection, recommendations.\n\nProject discuss: <a href="' + CONTACT + '">Get Free Quote</a> · <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>'
+        },
+        {
+            keys: ['data scien', 'analytics', 'pipeline', 'predictive', 'dashboard'],
+            reply: 'Data Scientist with AI: data pipelines, predictive models, analytics dashboards, aur AI-driven insights — raw data se business decisions tak.\n\nBaat karni hai? <a href="' + CONTACT + '">Contact form</a>'
+        },
+        {
+            keys: ['java', 'spring', 'microservice', 'backend', 'api', 'rest'],
+            reply: 'Hum enterprise Java + Spring Boot microservices aur secure REST APIs banate hain — banking, insurance, healthcare style systems.\n\nDemo video: <a href="#video">See How We Build</a>'
+        },
+        {
+            keys: ['react', 'angular', 'frontend', 'web app', 'full stack', 'fullstack'],
+            reply: 'Full-stack delivery: React / Angular frontends + Java Spring Boot backends, cloud-ready builds.\n\nQuote ke liye: <a href="' + CONTACT + '">Contact</a>'
+        },
+        {
+            keys: ['aws', 'cloud', 'deploy', 'kubernetes', 'docker', 'devops'],
+            reply: 'AWS / cloud deployment, Docker, CI/CD aur production monitoring setup milta hai.\n\nProject size batao — estimate de denge.'
+        },
+        {
+            keys: ['price', 'pricing', 'cost', 'kitna', 'budget', 'quote', 'rate', 'charges', 'fees', 'paisa'],
+            reply: 'Plans (indicative):\n• Starter — basic web app, ~2 weeks\n• Professional — full-stack + APIs, 2–4 months\n• Enterprise — microservices + AWS, 6–12 months\n\nExact quote free consultation ke baad. Calculator: <a href="#calculator">Project Cost Calculator</a> · <a href="#pricing">Pricing</a>'
+        },
+        {
+            keys: ['time', 'timeline', 'kitne din', 'duration', 'how long', 'delivery', 'kab tak'],
+            reply: 'Typical timelines:\n• Small: 2–4 weeks\n• Medium: 2–4 months\n• Enterprise: 6–12 months\n\nScope clear hone ke baad exact estimate milta hai.'
+        },
+        {
+            keys: ['contact', 'email', 'phone', 'whatsapp', 'call', 'number', 'reach', 'baat'],
+            reply: 'Contact FZK:\n• WhatsApp / Call: <a href="' + PHONE + '">+91-7728855804</a>\n• Email: fahdzaafarkhanglobaltechnology@gmail.com\n• Form: <a href="' + CONTACT + '">Get In Touch</a>\n• Instant chat: <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>'
+        },
+        {
+            keys: ['free call', 'consultation', 'book', 'meeting', 'schedule', 'demo call'],
+            reply: 'Free 30-minute discovery call — no pressure.\n\n<a href="' + CONTACT + '">Book via contact form</a> ya seedha <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a> karo: +91-7728855804'
+        },
+        {
+            keys: ['nda', 'security', 'confidential', 'ip '],
+            reply: 'Haan — NDA sign karte hain. IP aapki rehti hai. Enterprise engagements ke liye ye standard practice hai.'
+        },
+        {
+            keys: ['support', 'maintain', 'bug', 'after launch'],
+            reply: 'Post-launch support milta hai: bug fixes, updates, performance optimization. Plans mein support window included hai (1–12 months).'
+        },
+        {
+            keys: ['who', 'founder', 'fahd', 'company', 'about', 'fzk'],
+            reply: 'Fahd Zaafar Khan Global Technologies (FZK) — AI Engineer Solutions, Java Full Stack, Spring Boot APIs aur Cloud.\n\nFounder: Fahd Zaafar Khan · 10+ years experience.\n<a href="#about">About us</a>'
+        },
+        {
+            keys: ['human', 'agent', 'real person', 'team', 'insaan'],
+            reply: 'Team se baat: <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a> ya call <a href="' + PHONE + '">+91-7728855804</a> — usually fast reply.'
+        },
+        {
+            keys: ['thanks', 'thank you', 'shukriya', 'dhanyavad', 'okay', 'cool', 'great'],
+            reply: 'Welcome! Aur kuch chahiye to pooch lo — ya <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a> pe project details bhej do.'
         }
+    ];
+
+    const fallback = 'Samajh gaya — iske liye exact answer team degi.\n\nShort mein: AI / Full Stack / Spring Boot / AWS projects handle karte hain.\n\nTry chips below, ya <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a> / <a href="' + CONTACT + '">Get Free Quote</a>.';
+
+    function openPanel() {
+        panel.classList.add('open');
+        panel.setAttribute('aria-hidden', 'false');
+        toggle.setAttribute('aria-expanded', 'true');
+        setTimeout(() => input?.focus(), 200);
+    }
+
+    function closePanel() {
+        panel.classList.remove('open');
+        panel.setAttribute('aria-hidden', 'true');
+        toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    function appendMsg(text, role) {
+        const el = document.createElement('div');
+        el.className = 'ai-msg ' + role;
+        if (role === 'bot') el.innerHTML = text;
+        else el.textContent = text;
+        messages.appendChild(el);
+        messages.scrollTop = messages.scrollHeight;
+        return el;
+    }
+
+    function showTyping() {
+        const el = document.createElement('div');
+        el.className = 'ai-typing';
+        el.id = 'aiTyping';
+        el.innerHTML = '<span></span><span></span><span></span>';
+        messages.appendChild(el);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    function hideTyping() {
+        document.getElementById('aiTyping')?.remove();
+    }
+
+    function keyMatches(q, key) {
+        const k = key.trim().toLowerCase();
+        if (!k) return false;
+        if (k.length <= 3) {
+            return new RegExp('(?:^|\\s|[?.!,])' + k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?:$|\\s|[?.!,])').test(q);
+        }
+        return q.includes(k);
+    }
+
+    function getReply(raw) {
+        const q = raw.toLowerCase().trim();
+        let best = null;
+        let bestScore = 0;
+        for (const intent of intents) {
+            let score = 0;
+            for (const key of intent.keys) {
+                if (keyMatches(q, key)) score += key.trim().length;
+            }
+            if (score > bestScore) {
+                bestScore = score;
+                best = intent;
+            }
+        }
+        return bestScore > 0 ? best.reply : fallback;
+    }
+
+    function botReply(text) {
+        showTyping();
+        const delay = 450 + Math.min(900, text.length * 8);
+        setTimeout(() => {
+            hideTyping();
+            appendMsg(getReply(text), 'bot');
+        }, delay);
+    }
+
+    function send(text) {
+        const msg = (text || '').trim();
+        if (!msg) return;
+        appendMsg(msg, 'user');
+        if (input) input.value = '';
+        botReply(msg);
+    }
+
+    chipsEl.innerHTML = '';
+    chips.forEach((label) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'ai-chip';
+        btn.textContent = label;
+        btn.addEventListener('click', () => {
+            if (!panel.classList.contains('open')) openPanel();
+            send(label);
+        });
+        chipsEl.appendChild(btn);
+    });
+
+    appendMsg(
+        'Namaste! Main <strong>FZK AI Assistant</strong> hoon.\n\nAI Engineer, Java Full Stack, pricing, timeline — kuch bhi poochho. Quick options neeche hain.',
+        'bot'
+    );
+
+    toggle.addEventListener('click', () => {
+        if (panel.classList.contains('open')) closePanel();
+        else openPanel();
+    });
+    closeBtn?.addEventListener('click', closePanel);
+
+    form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        send(input?.value || '');
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
     });
 }
 
