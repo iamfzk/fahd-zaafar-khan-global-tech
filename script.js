@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initPWAInstall();
     initCharCount();
     initFooterYear();
+    initVideoPlayer();
 });
 
 /**
@@ -51,6 +52,22 @@ function initReducedMotion() {
     if (prefersReduced) {
         document.body.classList.add('reduce-motion');
     }
+}
+
+/**
+ * Click-to-play video (faster page load + better UX)
+ */
+function initVideoPlayer() {
+    const player = document.getElementById('videoPlayer');
+    const btn = document.getElementById('videoPlayBtn');
+    if (!player || !btn) return;
+
+    const play = () => {
+        const id = player.getAttribute('data-video-id') || 'TlB_eWDSMt4';
+        player.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" title="FZK Global Technologies - Introduction" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    };
+
+    btn.addEventListener('click', play);
 }
 
 /**
@@ -185,7 +202,7 @@ function initActiveNavLink() {
  */
 function initScrollReveal() {
     const revealElements = document.querySelectorAll(
-        '.section-header, .service-card, .tech-item, .project-card, .about-content, .skill-item, .faq-item, .team-card, .cert-badge, .client-logo, .testimonials-slider, .process-step, .pricing-card, .timeline-item, .map-wrapper, .compare-table-wrap, .as-seen-logos, .industry-tags, .blog-card, .guarantee-card'
+        '.section-header, .service-card, .tech-item, .project-card, .about-content, .skill-item, .faq-item, .team-card, .cert-badge, .client-logo, .testimonials-slider, .process-step, .pricing-card, .timeline-item, .map-wrapper, .compare-table-wrap, .as-seen-logos, .industry-tags, .blog-card, .guarantee-card, .video-showcase'
     );
 
     const revealOptions = {

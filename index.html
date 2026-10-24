@@ -24,7 +24,7 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f4c81">
     <link rel="canonical" href="https://fzkglobaltech.com/">
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=7">
     <link rel="dns-prefetch" href="https://formsubmit.co">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -385,12 +385,32 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Watch</span>
-                <h2 class="section-title">See Us In Action</h2>
-                <p class="section-subtitle">A quick introduction to FZK Global Technologies</p>
+                <h2 class="section-title">See How We Build</h2>
+                <p class="section-subtitle">AI-powered engineering, clean architecture, and delivery you can trust</p>
             </div>
-            <div class="video-wrapper">
-                <!-- Replace VIDEO_ID with your YouTube video ID (e.g. from youtube.com/watch?v=VIDEO_ID) -->
-                <iframe src="https://www.youtube.com/embed/TlB_eWDSMt4?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" title="FZK Global Technologies - Introduction"></iframe>
+            <div class="video-showcase">
+                <div class="video-player" id="videoPlayer" data-video-id="TlB_eWDSMt4">
+                    <button type="button" class="video-facade" id="videoPlayBtn" aria-label="Play introduction video">
+                        <div class="video-facade-bg" aria-hidden="true"></div>
+                        <div class="video-facade-content">
+                            <span class="video-play-ring">
+                                <i class="fas fa-play"></i>
+                            </span>
+                            <span class="video-facade-label">Watch company intro</span>
+                            <span class="video-facade-meta"><i class="fas fa-clock"></i> ~2 min · HD</span>
+                        </div>
+                    </button>
+                </div>
+                <aside class="video-highlights">
+                    <h3>What you’ll see</h3>
+                    <ul>
+                        <li><i class="fas fa-robot"></i> AI Engineer &amp; Data Science workflows</li>
+                        <li><i class="fas fa-layer-group"></i> Java Full Stack &amp; Spring Boot delivery</li>
+                        <li><i class="fab fa-aws"></i> Cloud-ready builds on AWS</li>
+                        <li><i class="fas fa-shield-alt"></i> Secure, scalable enterprise systems</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary video-cta">Discuss your project</a>
+                </aside>
             </div>
         </div>
     </section>
@@ -1491,7 +1511,7 @@
         </div>
     </footer>
 
-    <script src="script.js?v=6"></script>
+    <script src="script.js?v=7"></script>
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').catch(() => {});
