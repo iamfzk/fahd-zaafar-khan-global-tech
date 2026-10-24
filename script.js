@@ -41,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initKeyboardShortcuts();
     initROICalculator();
     initPWAInstall();
-    initPrintButton();
     initCharCount();
     initQuickContact();
     initFooterYear();
@@ -804,12 +803,6 @@ function initKeyboardShortcuts() {
                 window.location.hash = '#contact';
             }
         }
-        if (!inInput && (e.key === 'p' || e.key === 'P')) {
-            if (!e.ctrlKey && !e.metaKey && !e.altKey) {
-                e.preventDefault();
-                window.print();
-            }
-        }
         if (!inInput && (e.key === 'b' || e.key === 'B')) {
             if (!e.ctrlKey && !e.metaKey && !e.altKey) {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1133,13 +1126,6 @@ function initPWAInstall() {
     if (window.matchMedia('(display-mode: standalone)').matches) {
         banner.style.display = 'none';
     }
-}
-
-/**
- * Print button
- */
-function initPrintButton() {
-    document.getElementById('printBtn')?.addEventListener('click', () => window.print());
 }
 
 /**

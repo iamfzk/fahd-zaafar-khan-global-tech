@@ -3109,36 +3109,6 @@ select:focus-visible {
     transform: translateY(-3px);
 }
 
-.print-btn {
-    position: fixed;
-    bottom: 24px;
-    left: 80px;
-    width: 48px;
-    height: 48px;
-    background: var(--primary);
-    color: var(--white);
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-    z-index: 998;
-}
-
-.print-btn:hover {
-    background: var(--primary-dark);
-    transform: translateY(-3px);
-}
-
-@media (max-width: 480px) {
-    .print-btn {
-        left: 24px;
-        bottom: 150px;
-    }
-}
-
 .quick-contact-btn {
     position: fixed;
     bottom: 90px;
@@ -4076,7 +4046,7 @@ select:focus-visible {
 
 @media print {
     .page-loader, .scroll-progress, .skip-link, .navbar, .hero-scroll,
-    .back-to-top, .print-btn, .quick-contact-btn, .floating-contact, .share-float, .sticky-cta, .cookie-consent, .pwa-install,
+    .back-to-top, .quick-contact-btn, .floating-contact, .share-float, .sticky-cta, .cookie-consent, .pwa-install,
     .project-filters, .testimonial-nav, .testimonial-dots,
     .social-proof-bar, .copy-btn, .exit-popup, .map-section {
         display: none !important;
