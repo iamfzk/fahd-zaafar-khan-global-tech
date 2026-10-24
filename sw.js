@@ -1,5 +1,5 @@
 // FZK Global Technologies - Service Worker (PWA)
-const CACHE_NAME = 'fzk-global-tech-v11';
+const CACHE_NAME = 'fzk-global-tech-v12';
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();

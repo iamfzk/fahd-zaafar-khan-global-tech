@@ -1099,9 +1099,9 @@ function initAiAssistant() {
             id: 'contact',
             keys: ['contact', 'email', 'phone', 'whatsapp', 'call', 'number', 'reach', 'baat', 'संपर्क', 'تواصل', 'هاتف', 'ايميل', 'بريد'],
             replies: {
-                en: 'Contact FZK:\n• WhatsApp / Call: <a href="' + PHONE + '">+91-7728855804</a>\n• Email: fahdzaafarkhanglobaltechnology@gmail.com\n• Form: <a href="' + CONTACT + '">Get In Touch</a>\n• Chat: <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>',
-                hi: 'FZK से संपर्क:\n• WhatsApp / Call: <a href="' + PHONE + '">+91-7728855804</a>\n• Email: fahdzaafarkhanglobaltechnology@gmail.com\n• फ़ॉर्म: <a href="' + CONTACT + '">Get In Touch</a>\n• चैट: <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>',
-                ar: 'تواصل مع FZK:\n• واتساب / اتصال: <a href="' + PHONE + '">+91-7728855804</a>\n• البريد: fahdzaafarkhanglobaltechnology@gmail.com\n• النموذج: <a href="' + CONTACT + '">تواصل معنا</a>\n• دردشة: <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>'
+                en: 'Contact FZK:\n• WhatsApp / Call: <a href="' + PHONE + '">+91-7728855804</a>\n• Email: <a href="mailto:fahdzaafarkhan@gmail.com">fahdzaafarkhan@gmail.com</a>\n• Also: fahdzaafarkhanglobaltechnology@gmail.com · officialfahdzaafarkhan@gmail.com\n• Form: <a href="' + CONTACT + '">Get In Touch</a>\n• Chat: <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>',
+                hi: 'FZK से संपर्क:\n• WhatsApp / Call: <a href="' + PHONE + '">+91-7728855804</a>\n• Email: <a href="mailto:fahdzaafarkhan@gmail.com">fahdzaafarkhan@gmail.com</a>\n• अन्य: fahdzaafarkhanglobaltechnology@gmail.com · officialfahdzaafarkhan@gmail.com\n• फ़ॉर्म: <a href="' + CONTACT + '">Get In Touch</a>\n• चैट: <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>',
+                ar: 'تواصل مع FZK:\n• واتساب / اتصال: <a href="' + PHONE + '">+91-7728855804</a>\n• البريد: <a href="mailto:fahdzaafarkhan@gmail.com">fahdzaafarkhan@gmail.com</a>\n• أيضًا: fahdzaafarkhanglobaltechnology@gmail.com · officialfahdzaafarkhan@gmail.com\n• النموذج: <a href="' + CONTACT + '">تواصل معنا</a>\n• دردشة: <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp</a>'
             }
         },
         {
