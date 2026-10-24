@@ -54,15 +54,16 @@ function initReducedMotion() {
 }
 
 /**
- * Page loader - hide when page is ready
+ * Page loader — hide ASAP (don't wait for YouTube/fonts/CDN)
  */
 function initPageLoader() {
     const loader = document.getElementById('pageLoader');
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            loader?.classList.add('hidden');
-        }, 800);
-    });
+    if (!loader) return;
+    const hide = () => loader.classList.add('hidden');
+    // Show content as soon as DOM is ready
+    requestAnimationFrame(() => setTimeout(hide, 200));
+    // Safety: always hide within 1.2s even if something hangs
+    setTimeout(hide, 1200);
 }
 
 /**
@@ -256,21 +257,21 @@ const TRANSLATIONS = {
         heroSubPrefix: 'We provide',
         btnServices: 'Our Services',
         btnContact: 'Contact Us',
-        typingPhrases: ['Java Full Stack Development', 'Spring Boot APIs', 'Cloud Solutions', 'AI Engineer Solutions', 'React & Angular Apps', 'Microservices Architecture']
+        typingPhrases: ['Java Full Stack Development', 'AI Engineer Solutions', 'Data Scientist with AI', 'Spring Boot APIs', 'Cloud Solutions', 'Microservices Architecture']
     },
     hi: {
         heroTitle: 'भविष्य के लिए डिजिटल समाधान निर्माण',
         heroSubPrefix: 'हम प्रदान करते हैं',
         btnServices: 'हमारी सेवाएं',
         btnContact: 'संपर्क करें',
-        typingPhrases: ['Java फुल स्टैक डेवलपमेंट', 'Spring Boot APIs', 'क्लाउड सॉल्यूशन', 'AI Engineer सॉल्यूशन', 'React और Angular ऐप्स', 'माइक्रोसर्विसेस आर्किटेक्चर']
+        typingPhrases: ['Java फुल स्टैक डेवलपमेंट', 'AI Engineer सॉल्यूशन', 'Data Scientist with AI', 'Spring Boot APIs', 'क्लाउड सॉल्यूशन', 'माइक्रोसर्विसेस आर्किटेक्चर']
     },
     ur: {
         heroTitle: 'مستقبل کے لیے ڈیجیٹل حل کی تعمیر',
         heroSubPrefix: 'ہم فراہم کرتے ہیں',
         btnServices: 'ہماری خدمات',
         btnContact: 'رابطہ کریں',
-        typingPhrases: ['Java Full Stack Development', 'Spring Boot APIs', 'کلاؤڈ حل', 'AI Engineer Solutions', 'React اور Angular ایپس', 'مائیکرو سروسز آرکیٹیکچر']
+        typingPhrases: ['Java Full Stack Development', 'AI Engineer Solutions', 'Data Scientist with AI', 'Spring Boot APIs', 'کلاؤڈ حل', 'مائیکرو سروسز آرکیٹیکچر']
     }
 };
 
@@ -630,7 +631,7 @@ function initParticles() {
 
     const ctx = canvas.getContext('2d');
     let stars = [];
-    const starCount = 120;
+    const starCount = 40;
 
     function resize() {
         canvas.width = canvas.offsetWidth;
